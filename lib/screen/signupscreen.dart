@@ -1,5 +1,6 @@
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'homescreen.dart';
 
@@ -20,18 +21,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
     appBar: AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: const Text(
+      title:  Text(
         "Sign Up",
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: GoogleFonts.varelaRound(fontSize: 24, fontWeight: FontWeight.bold),
       ),
     ),
       body: Container(width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height ,
       decoration: BoxDecoration(
         gradient: LinearGradient(colors: [
-          Color(0xFFA4A0A0),
-          Color(0xFF8E9393),
-          Color(0xFFA4A0A0)
+          Color(0xFF2A5EE1),
+          Color(0xFF1F48D0),
+          Color(0xFF2A5EE1)
         ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
         child: SingleChildScrollView(
           child: Padding(
@@ -50,7 +51,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 20,
                 ),
                 signInButton((context), false, (){
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen())); //routes back to HomeScreen
                 })
               ],
             )

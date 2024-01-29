@@ -11,8 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController _passwordTextController = TextEditingController();
-  TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController(); //enable password entry
+  TextEditingController _emailTextController = TextEditingController(); //enable email entry
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,47 +21,47 @@ class _LoginScreenState extends State<LoginScreen> {
           height: double.infinity,
           decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
-            Color(0xFFA4A0A0),
-            Color(0xFF8E9393),
-            Color(0xFFA4A0A0)],
+            Color(0xFF2A5EE1), //change bg color (top)
+            Color(0xFF1F48D0), //change bg color (main)
+            Color(0xFF2A5EE1)], //change bg color (bottom)
           begin: Alignment.topCenter, end: Alignment.bottomCenter),),
       child:  Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-            logoWidget("background_image/aerogotchi.png"),
+            logoWidget("background_image/aerogotchi.png"), //image file path for logo
               SizedBox(
                 height:10,
               ),
-              reusableTextField("Enter Email", Icons.person_outline, false, _emailTextController),
+              reusableTextField("Enter Email", Icons.person_outline, false, _emailTextController), //open text field for email
               SizedBox(
                 height:10,
               ),
-          reusableTextField("Enter Password", Icons.lock_outline, true, _passwordTextController),
+          reusableTextField("Enter Password", Icons.lock_outline, true, _passwordTextController), //open text field for password
               SizedBox(
                 height: 20,
               ),
-              signInButton(context,true, () {}),
-              signUpOption()
+              signInButton(context,true, () {}), //enable sign in button to show up
+              signUpOption() //enable signUpOption
         ],
               ),
               ),
           ),
         );
   }
-  Row signUpOption (){
+  Row signUpOption (){ //SignUp Option Function
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Don't have account?",
-        style: TextStyle(color: Colors.white70)),
+         Text("Don't have account?",
+        style: GoogleFonts.varelaRound(color: Colors.white70)),
         GestureDetector(
           onTap: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen())); //routes to SignUpScreen when pressed
           },
-          child: const Text(
+          child: Text(
             "  Sign Up",
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+            style: GoogleFonts.varelaRound(color: Colors.white,fontWeight: FontWeight.bold),
           )
         )
       ]

@@ -1,6 +1,9 @@
 import 'package:aerogotchi/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
 
+
+//no usabability yet. Will be updated.
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super (key: key);
 

@@ -1,3 +1,5 @@
+import 'package:aerogotchi/screen/homescreen.dart';
+import 'package:aerogotchi/screen/idlescreen.dart';
 import 'package:aerogotchi/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +33,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
        primarySwatch: Colors.blue,
       ),
-      home: const LoginScreen(),
+      home: const IdleScreen(),
     );
   }
 }
