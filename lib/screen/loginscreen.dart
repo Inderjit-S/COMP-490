@@ -37,6 +37,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 height:10,
               ),
           reusableTextField("Enter Password", Icons.lock_outline, true, _passwordTextController),
+              SizedBox(
+                height: 20,
+              ),
+              signInButton(context,true, () {})
         ],
               ),
               ),
