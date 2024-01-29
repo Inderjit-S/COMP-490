@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Image logoWidget(String imageName)
 {
@@ -19,14 +20,14 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType, Tex
     enableSuggestions: !isPasswordType,
     autocorrect: !isPasswordType,
     cursorColor: Colors.white,
-    style: TextStyle(color: Colors.white.withOpacity(0.9)),
+    style: GoogleFonts.varelaRound(color: Colors.white.withOpacity(0.9)),
     decoration: InputDecoration(
       prefixIcon: Icon(
         icon,
         color: Colors.white70,
       ),
       labelText: text,
-      labelStyle: TextStyle(color:Colors.white.withOpacity(0.9)),
+      labelStyle: GoogleFonts.varelaRound(color:Colors.white.withOpacity(0.9)),
       filled: true,
       floatingLabelBehavior: FloatingLabelBehavior.never,
       fillColor: Colors.white.withOpacity(0.3),
@@ -54,7 +55,7 @@ Container signInButton(BuildContext context, bool isLogin, Function onTap)
           },
       child: Text(
         isLogin ? 'LOG IN' : 'SIGN UP',
-        style: const TextStyle(
+        style:  GoogleFonts.varelaRound(
           color: Colors.black87, fontWeight: FontWeight.bold, fontSize: 16),
         ),
       style: ButtonStyle(

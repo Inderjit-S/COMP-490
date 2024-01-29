@@ -1,5 +1,6 @@
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'homescreen.dart';
 
@@ -20,9 +21,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     appBar: AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: const Text(
+      title:  Text(
         "Sign Up",
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        style: GoogleFonts.varelaRound(fontSize: 24, fontWeight: FontWeight.bold),
       ),
     ),
       body: Container(width: MediaQuery.of(context).size.width,

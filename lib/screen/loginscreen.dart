@@ -53,15 +53,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text("Don't have account?",
-        style: TextStyle(color: Colors.white70)),
+         Text("Don't have account?",
+        style: GoogleFonts.varelaRound(color: Colors.white70)),
         GestureDetector(
           onTap: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
           },
-          child: const Text(
+          child: Text(
             "  Sign Up",
-            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+            style: GoogleFonts.varelaRound(color: Colors.white,fontWeight: FontWeight.bold),
           )
         )
       ]
