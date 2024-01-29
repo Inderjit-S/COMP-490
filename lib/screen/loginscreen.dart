@@ -1,3 +1,4 @@
+import 'package:aerogotchi/screen/signupscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../reusable_widget/reusable_widget.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height:10,
               ),
-              reusableTextField("Enter UserName", Icons.person_outline, false, _emailTextController),
+              reusableTextField("Enter Email", Icons.person_outline, false, _emailTextController),
               SizedBox(
                 height:10,
               ),
@@ -40,11 +41,30 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: 20,
               ),
-              signInButton(context,true, () {})
+              signInButton(context,true, () {}),
+              signUpOption()
         ],
               ),
               ),
           ),
         );
+  }
+  Row signUpOption (){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text("Don't have account?",
+        style: TextStyle(color: Colors.white70)),
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen()));
+          },
+          child: const Text(
+            "  Sign Up",
+            style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+          )
+        )
+      ]
+    );
   }
 }
