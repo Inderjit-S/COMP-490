@@ -1,3 +1,4 @@
+import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:flutter/material.dart';
 import 'playingmenuscreen.dart'; // Import PlayingMenuScreen
@@ -50,9 +51,12 @@ class _TempScreenState extends State<TempScreen> {
               },
             ),
             MenuButton(
-              title: 'Option 2',
+              title: 'Drone Control Menu',
               onPressed: () {
-                // Add navigation or functionality for Option 2
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DroneControlScreen()),
+                );
               },
             ),
             MenuButton(
