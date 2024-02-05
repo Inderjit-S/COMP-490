@@ -1,6 +1,7 @@
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:flutter/material.dart';
 import 'playingmenuscreen.dart'; // Import PlayingMenuScreen
+import 'package:aerogotchi/screen/statusmenuscreen.dart';
 
 class TempScreen extends StatefulWidget {
   const TempScreen({Key? key}) : super(key: key);
@@ -40,9 +41,12 @@ class _TempScreenState extends State<TempScreen> {
               },
             ),
             MenuButton(
-              title: 'Option 1',
+              title: 'Status Menu',
               onPressed: () {
-                // Add navigation or functionality for Option 1
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => StatusMenuScreen()),
+                );
               },
             ),
             MenuButton(

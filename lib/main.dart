@@ -4,6 +4,7 @@ import 'package:aerogotchi/screen/loginscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:aerogotchi/screen/temphomescreen.dart';
+import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
