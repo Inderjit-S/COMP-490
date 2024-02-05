@@ -1,11 +1,10 @@
 import 'package:aerogotchi/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
 
-
 //no usabability yet. Will be updated.
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super (key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,15 +13,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       body: Center(
         child: ElevatedButton(
-            child: Text("Logout"),
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
-            },
-              ),
+          child: Text("Logout"),
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginScreen()));
+          },
+        ),
       ),
     );
   }

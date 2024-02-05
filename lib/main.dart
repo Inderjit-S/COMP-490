@@ -1,6 +1,9 @@
 import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:aerogotchi/screen/idlescreen.dart';
 import 'package:aerogotchi/screen/loginscreen.dart';
+import 'package:aerogotchi/screen/playingmenuscreen.dart';
+import 'package:aerogotchi/screen/foodmenuscreen.dart';
+import 'package:aerogotchi/screen/temphomescreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,9 +34,10 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-       primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue,
       ),
-      home: const IdleScreen(),
+      home: const TempScreen(), // Temp screen to test shit out
+      //home: const IdleScreen(),
     );
   }
 }
