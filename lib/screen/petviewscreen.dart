@@ -1,3 +1,4 @@
+import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:aerogotchi/screen/settingscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
@@ -143,14 +144,25 @@ class _PetViewScreenState extends State<PetViewScreen> {
         ),
       ),
       width: width,
-      height: 200,
+      height: 250, // Increased height to accommodate text
       alignment: Alignment.center,
-      child: Text(
-        'Pet Image',
-        style: TextStyle(fontSize: 20),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SmallerlogoWidget("background_image/aerogotchi.png"), // Image widget
+          SizedBox(height: 5), // Spacer between image and text
+          Text(
+            'Character Name', // Add Character Name
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ],
       ),
     );
   }
+
 
   Container buildBottomActionBox({required double width}) {
     return Container(

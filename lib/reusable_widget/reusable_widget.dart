@@ -12,6 +12,16 @@ Image logoWidget(String imageName) //Aerogotchi logo (change width and height to
   );
 }
 
+Image SmallerlogoWidget(String imageName) //Aerogotchi logo (change width and height to resize)
+{
+  return Image.asset (
+    imageName,
+    fit: BoxFit.cover,
+    width:2250,
+    height:175,
+  );
+}
+
 TextField reusableTextField(String text, IconData icon, bool isPasswordType, TextEditingController controller) //TextField for (User,Pass,CharacterName)
 {
   return TextField(
