@@ -13,9 +13,9 @@ class _StatusMenuScreenState extends State<StatusMenuScreen> {
   // *************************************
 
   // Set stats values here
-  int energyLevel = 10;
+  int energyLevel = 6;
   int hungerLevel = 3;
-  int happinessLevel = 2;
+  int happinessLevel = 8;
 
   // *************************************
 
