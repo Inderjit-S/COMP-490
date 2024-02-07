@@ -1,4 +1,5 @@
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
+import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
@@ -21,41 +22,45 @@ class _PetViewScreenState extends State<PetViewScreen> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(130.0),
+        preferredSize: Size.fromHeight(150.0), // Set the preferred height
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: IconButton(
-            //BACK ARROW************
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              // Navigate back to the previous screen
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => TempScreen()));
-            },
-            color: Color.fromARGB(68, 0, 0, 0)
-                .withOpacity(0.3), // Lower opacity of back button
-          ),
           flexibleSpace: Container(
-            padding: const EdgeInsets.only(top: 20.0),
+            padding: const EdgeInsets.only(top: 60.0), // Adjust top padding
             child: Center(
               child: Text(
-                'PET VIEW',
+                'PETVIEW',
                 style: TextStyle(
                   color: Color(0xFFAC90FF),
-                  fontSize: 32.0,
+                  fontSize: 32.0, // Increased font size
                   fontWeight: FontWeight.bold,
                   shadows: [
                     Shadow(
                       color: Color(0xFF4660E8),
-                      offset: Offset(0, 8),
-                      blurRadius: 6,
+                      offset: Offset(
+                          0, 8), // Adjust the offset to create a lifting effect
+                      blurRadius:
+                          6, // Increase blur radius for a more prominent shadow
                     ),
                   ],
                 ),
               ),
             ),
           ),
+          centerTitle: true,
+          actions: [
+            IconButton(
+              // LOGOUT BUTTON
+              icon: Icon(Icons.logout_sharp),
+              onPressed: () {
+                //logout function from your authentication logic
+                // Navigate back to the home screen
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()));
+              },
+            ),
+          ],
         ),
       ),
       extendBodyBehindAppBar: true,
@@ -79,7 +84,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
             top: MediaQuery.of(context).padding.top + 80,
             child: Column(
               children: [
-                SizedBox(height: 0),
+                SizedBox(height: 10),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
