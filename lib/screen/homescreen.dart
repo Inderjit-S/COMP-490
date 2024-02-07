@@ -1,4 +1,6 @@
 import 'package:aerogotchi/screen/loginscreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 //no usabability yet. Will be updated.
@@ -18,8 +20,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ElevatedButton(
           child: Text("Logout"),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+            FirebaseAuth.instance.signOut().then((value) {
+              print("Signed Out");
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              );
+            });
           },
         ),
       ),

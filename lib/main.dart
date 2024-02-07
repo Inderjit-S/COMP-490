@@ -8,11 +8,23 @@ import 'package:aerogotchi/screen/settingscreen.dart';
 import 'package:aerogotchi/screen/temphomescreen.dart';
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   try {
+//     await Firebase.initializeApp();
+//   } catch (e) {
+//     print('Error initializing Firebase: $e');
+//   }
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -40,8 +52,9 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         primarySwatch: Colors.blue,
       ),
-      home: const PetViewScreen(), // Temp screen to test shit out
-      //home: const IdleScreen(),
+      // home: const PetViewScreen(),
+      // home: const TempScreen(), // Temp screen to test shit out
+      home: const IdleScreen(),
     );
   }
 }

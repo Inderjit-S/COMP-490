@@ -4,10 +4,14 @@ buildscript {
         google()
         mavenCentral()
     }
-
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // Add the Google Services plugin with apply set to false
+        classpath 'com.google.gms:google-services:4.3.13'
     }
+    // Apply the plugin manually to specific modules as needed
+    // apply false to prevent it from being applied by default
+    // apply plugin: 'com.google.gms.google-services'
 }
 
 allprojects {
@@ -21,6 +25,7 @@ rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
+
 subprojects {
     project.evaluationDependsOn(':app')
 }

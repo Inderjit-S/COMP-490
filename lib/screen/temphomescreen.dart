@@ -1,5 +1,9 @@
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
+import 'package:aerogotchi/screen/idlescreen.dart';
+import 'package:aerogotchi/screen/loginscreen.dart';
+import 'package:aerogotchi/screen/petviewscreen.dart';
+import 'package:aerogotchi/screen/signupscreen.dart';
 import 'package:flutter/material.dart';
 import 'playingmenuscreen.dart'; // Import PlayingMenuScreen
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
@@ -23,39 +27,39 @@ class _TempScreenState extends State<TempScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             MenuButton(
-              title: 'Playing Menu',
+              title: 'Petview',
               onPressed: () {
                 // Navigate to PlayingMenuScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PlayingMenuScreen()),
+                  MaterialPageRoute(builder: (context) => PetViewScreen()),
                 );
               },
             ),
             MenuButton(
-              title: 'Food Menu',
+              title: 'idle',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => FoodMenuScreen()),
+                  MaterialPageRoute(builder: (context) => IdleScreen()),
                 );
               },
             ),
             MenuButton(
-              title: 'Status Menu',
+              title: 'Signup',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => StatusMenuScreen()),
+                  MaterialPageRoute(builder: (context) => SignUpScreen()),
                 );
               },
             ),
             MenuButton(
-              title: 'Drone Control Menu',
+              title: 'log in',
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DroneControlScreen()),
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
                 );
               },
             ),

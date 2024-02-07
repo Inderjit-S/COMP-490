@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "165720095567",
+    "project_id": "signin-aerogotchi-970ec",
+    "storage_bucket": "signin-aerogotchi-970ec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165720095567:android:aec7dae3a021c3b907633a",
+        "android_client_info": {
+          "package_name": "com.example.aerogotchi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApOtr777g1HHqwfDCp8kF7r2KNpfVc94g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

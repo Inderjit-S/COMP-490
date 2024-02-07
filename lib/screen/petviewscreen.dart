@@ -1,10 +1,11 @@
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
-import 'package:aerogotchi/screen/settingscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'playingmenuscreen.dart'; // Import PlayingMenuScreen
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
+import 'package:aerogotchi/screen/settingscreen.dart';
+import 'package:aerogotchi/screen/temphomescreen.dart';
 
 class PetViewScreen extends StatefulWidget {
   const PetViewScreen({Key? key}) : super(key: key);
@@ -24,6 +25,17 @@ class _PetViewScreenState extends State<PetViewScreen> {
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          leading: IconButton(
+            //BACK ARROW************
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              // Navigate back to the previous screen
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TempScreen()));
+            },
+            color: Color.fromARGB(68, 0, 0, 0)
+                .withOpacity(0.3), // Lower opacity of back button
+          ),
           flexibleSpace: Container(
             padding: const EdgeInsets.only(top: 20.0),
             child: Center(
@@ -125,7 +137,9 @@ class _PetViewScreenState extends State<PetViewScreen> {
             );
           }),
           buildCircularButton(Icons.settings, Color(0xFF6354ED), () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SettingScreen()),
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SettingScreen()),
             );
           }),
         ],
@@ -162,7 +176,6 @@ class _PetViewScreenState extends State<PetViewScreen> {
       ),
     );
   }
-
 
   Container buildBottomActionBox({required double width}) {
     return Container(

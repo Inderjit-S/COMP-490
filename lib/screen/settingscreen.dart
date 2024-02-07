@@ -1,6 +1,5 @@
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import '../reusable_widget/reusable_widget.dart';
 
 class SettingScreen extends StatefulWidget {
@@ -16,6 +15,13 @@ class _SettingsState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
+    // Adjust these variables for container width and height
+    double containerWidth = screenWidth * 0.6;
+    double containerHeight = screenHeight * 0.2;
+
     return Scaffold(
       body: Container(
         width: double.infinity,
@@ -34,62 +40,79 @@ class _SettingsState extends State<SettingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              logoWidget("background_image/aerogotchi.png"), //image file path for logo
+              logoWidget(
+                  "background_image/aerogotchi.png"), //image file path for logo
               Text(
                 'SETTINGS',
-                style: GoogleFonts.varelaRound(
-                  color: Color(0xFFAC90FF),
-                  fontSize: 32,
+                style: TextStyle(
+                  fontSize: 28.0,
                   fontWeight: FontWeight.bold,
+                  color: Color(0xFF6354ED), // Set font color
                 ),
               ),
               SizedBox(height: 20),
+              // Adjust width and height of the container
               Container(
-                width: 250,
-                height: 40,
+                width: containerWidth,
+                height: containerHeight,
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
+                  color: Color(0xFF6354ED),
+                  borderRadius: BorderRadius.circular(35),
                   border: Border.all(
-                    color: Color.fromARGB(147, 0, 0, 0), // Color of the outline BARS
-                    width: 2, // Thickness of the outline
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    'Restart',
-                    style: TextStyle(
-                      color: Color(0xFFAC90FF),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 22,
-                    ),
+                    color: Color(0xFF1C205E), // Stroke color for the container
+                    width: 3,
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-              Container(
-                width: 250,
-                height: 40,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Color.fromARGB(147, 0, 0, 0),
-                    width: 2,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => PetViewScreen()));
-                  },
-                  child: Center(
-                    child: Text(
-                      'Back',
-                      style: TextStyle(
-                        color: Color(0xFFAC90FF),
-                        fontWeight: FontWeight.bold ,
-                        fontSize: 22,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF2D7ADE),
+                        onPrimary: Color(0xFFA990FF),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(35),
+                          side: BorderSide(
+                            color: Color(0xFF1C205E),
+                            width: 3,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'Restart',
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
-                  ),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PetViewScreen()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xFF92B1F6),
+                        onPrimary: Color.fromARGB(255, 123, 91, 229),
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(35),
+                          side: BorderSide(
+                            color: Color(0xFF1C205E),
+                            width: 3,
+                          ),
+                        ),
+                      ),
+                      child: Text(
+                        'Back',
+                        style: TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
