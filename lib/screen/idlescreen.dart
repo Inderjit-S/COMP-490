@@ -17,8 +17,8 @@ class _IdleScreenState extends State<IdleScreen> {
   void initState() {
     super.initState();
 
-    // Set up a timer to toggle text visibility every 500 milliseconds (adjust as needed)
-    Timer.periodic(Duration(milliseconds: 500), (timer) {
+    // Set up a timer to toggle text visibility every 800 milliseconds (adjust as needed)
+    Timer.periodic(Duration(milliseconds: 800), (timer) {
       setState(() {
         isTextVisible = !isTextVisible;
       });
@@ -29,7 +29,8 @@ class _IdleScreenState extends State<IdleScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => LoginScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => LoginScreen()));
       },
       child: Container(
         width: double.infinity,
@@ -43,21 +44,46 @@ class _IdleScreenState extends State<IdleScreen> {
             ],
           ),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: Stack(
           children: <Widget>[
-            logoWidget("background_image/aerogotchi.png"),
-            SizedBox(
-              height: 240,
+            Positioned(
+              top: MediaQuery.of(context).size.height *
+                  0.30, // Adjust as needed CHANGES LOGO HEIGHT
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Transform.scale(
+                  scale: 1.1, // Adjust as needed
+                  child: logoWidget("background_image/aerogotchi.png"),
+                ),
+              ),
             ),
-            Visibility(
-              visible: isTextVisible,
-              child: Text(
-                "Tap to continue",
-                style: TextStyle(
-                  decoration: TextDecoration.none,
-                  color: Colors.white60,
-                  fontSize: 20,
+            Positioned(
+              top: MediaQuery.of(context).size.height *
+                  .850, // Adjust as needed CHANGES MESSAGE HEIGHT
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Visibility(
+                  visible: isTextVisible,
+                  child: Text(
+                    "Tap to continue",
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      decoration: TextDecoration.none,
+                      color: Color(0xFF95B2F8),
+                      fontSize: 26,
+                      fontWeight: FontWeight.w500,
+                      shadows: [
+                        Shadow(
+                          color: Colors.black.withOpacity(0.5), // Shadow color
+                          offset:
+                              Offset(0, 2), // Shadow position, x and y offset
+                          blurRadius: 3, // Shadow blur radius
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
