@@ -7,7 +7,8 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // Add the Google Services plugin with apply set to false
-        classpath 'com.google.gms:google-services:4.3.13'
+        classpath 'com.google.gms:google-services:4.3.0'
+
     }
     // Apply the plugin manually to specific modules as needed
     // apply false to prevent it from being applied by default
