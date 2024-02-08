@@ -39,33 +39,62 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              logoWidget(
-                  "background_image/aerogotchi.png"), //image file path for logo
+              SizedBox(
+                height: 0, // Adjusted height to create less space
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width *
+                    1, // Adjust the width as needed
+                height: MediaQuery.of(context).size.width *
+                    1, // Adjust the height as needed
+                child: logoWidget(
+                    "background_image/aerogotchi.png"), //image file path for logo
+              ),
+              SizedBox(
+                height: 0, // Adjusted height to create less space
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width *
+                    0.8, // Adjust the width as needed
+                height: 50, // Adjust the height as needed
+                child: reusableTextField("Enter Email", Icons.person_outline,
+                    false, _emailTextController), //open text field for email
+              ),
               SizedBox(
                 height: 10,
               ),
-              reusableTextField("Enter Email", Icons.person_outline, false,
-                  _emailTextController), //open text field for email
               SizedBox(
-                height: 10,
+                width: MediaQuery.of(context).size.width *
+                    0.8, // Adjust the width as needed
+                height: 50, // Adjust the height as needed
+                child: reusableTextField(
+                    "Enter Password",
+                    Icons.lock_outline,
+                    true,
+                    _passwordTextController), //open text field for password
               ),
-              reusableTextField("Enter Password", Icons.lock_outline, true,
-                  _passwordTextController), //open text field for password
               SizedBox(
                 height: 20,
               ),
-              signInButton(context, true, () {
-                FirebaseAuth.instance
-                    .signInWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text)
-                    .then((value) {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => PetViewScreen()));
-                }).onError((error, stackTrace) {
-                  print("Error: ${error.toString()}");
-                }); //enable sign in button to show up
-              }),
+              SizedBox(
+                width: MediaQuery.of(context).size.width *
+                    0.8, // Adjust the width as needed
+                height: 79, // Adjust the height as needed
+                child: signInButton(context, true, () {
+                  FirebaseAuth.instance
+                      .signInWithEmailAndPassword(
+                          email: _emailTextController.text,
+                          password: _passwordTextController.text)
+                      .then((value) {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PetViewScreen()));
+                  }).onError((error, stackTrace) {
+                    print("Error: ${error.toString()}");
+                  }); //enable sign in button to show up
+                }),
+              ),
               signUpOption() //enable signUpOption
             ],
           ),

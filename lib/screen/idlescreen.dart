@@ -48,12 +48,12 @@ class _IdleScreenState extends State<IdleScreen> {
           children: <Widget>[
             Positioned(
               top: MediaQuery.of(context).size.height *
-                  0.30, // Adjust as needed CHANGES LOGO HEIGHT
+                  0.31, // Adjust as needed CHANGES LOGO HEIGHT
               left: 0,
               right: 0,
               child: Center(
                 child: Transform.scale(
-                  scale: 1.1, // Adjust as needed
+                  scale: 1.9, // Adjust as needed
                   child: logoWidget("background_image/aerogotchi.png"),
                 ),
               ),
@@ -71,7 +71,7 @@ class _IdleScreenState extends State<IdleScreen> {
                     style: TextStyle(
                       fontFamily: 'Poppins',
                       decoration: TextDecoration.none,
-                      color: Color(0xFF95B2F8),
+                      color: Color.fromARGB(255, 172, 195, 248),
                       fontSize: 26,
                       fontWeight: FontWeight.w500,
                       shadows: [
