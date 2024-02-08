@@ -1,6 +1,7 @@
 import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:aerogotchi/screen/idlescreen.dart';
 import 'package:aerogotchi/screen/loginscreen.dart';
+import 'package:aerogotchi/screen/petnamescreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
@@ -54,7 +55,7 @@ class MyApp extends StatelessWidget {
       ),
       // home: const PetViewScreen(),
       // home: const TempScreen(), // Temp screen to test shit out
-      home: const IdleScreen(),
+      home: const PetNameScreen(),
     );
   }
 }

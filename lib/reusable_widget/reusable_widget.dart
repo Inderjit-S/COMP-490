@@ -43,8 +43,11 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType, Tex
       fillColor: Colors.white.withOpacity(0.3),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(40.0),
-        borderSide: const BorderSide(width: 1.0, style: BorderStyle.none)),
+        borderSide: const BorderSide(width: 1.0, style: BorderStyle.none),
       ),
+    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0 ),
+    isDense: true,
+    ),
     keyboardType: isPasswordType
     ? TextInputType.visiblePassword
     :TextInputType.emailAddress,
