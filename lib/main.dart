@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: const PetViewScreen(),
-      // home: const TempScreen(), // Temp screen to test shit out
-      home: const PetNameScreen(),
+      home: const TempScreen(), // Temp screen to test shit out
+      //home: const PetNameScreen(),
     );
   }
 }

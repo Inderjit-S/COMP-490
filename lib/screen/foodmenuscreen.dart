@@ -24,7 +24,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
               child: Text(
                 'FOOD MENU',
                 style: TextStyle(
-                  fontSize: 32.0,
+                  fontSize: 40.0,
                   color: Color(0xFFAC90FF),
                   fontWeight: FontWeight.bold,
                   shadows: [
@@ -85,14 +85,6 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                     color: Color(0xFF9CAAFA),
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(color: Color(0xFF18235B), width: 4),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 4,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
                   ),
                   child: GridView.count(
                     shrinkWrap: true,
@@ -102,7 +94,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                     mainAxisSpacing: 20,
                     children: <Widget>[
                       CircularButton(
-                        icon: Icons.fastfood,
+                        imagePath: 'assets/icons/hamIcon.png',
                         isSelected: selectedButtonIndex == 0,
                         onPressed: () {
                           setState(() {
@@ -111,7 +103,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                         },
                       ),
                       CircularButton(
-                        icon: Icons.local_dining,
+                        imagePath: 'assets/icons/carrotIcon.png',
                         isSelected: selectedButtonIndex == 1,
                         onPressed: () {
                           setState(() {
@@ -120,7 +112,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                         },
                       ),
                       CircularButton(
-                        icon: Icons.icecream,
+                        imagePath: 'assets/icons/icecreamIcon.png',
                         isSelected: selectedButtonIndex == 2,
                         onPressed: () {
                           setState(() {
@@ -129,7 +121,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                         },
                       ),
                       CircularButton(
-                        icon: Icons.cookie,
+                        imagePath: 'assets/icons/breadIcon.png',
                         isSelected: selectedButtonIndex == 3,
                         onPressed: () {
                           setState(() {
@@ -150,14 +142,16 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
 }
 
 class CircularButton extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final String? imagePath;
   final bool isSelected;
   final VoidCallback onPressed;
 
   const CircularButton({
-    required this.icon,
     required this.isSelected,
     required this.onPressed,
+    this.icon,
+    this.imagePath,
   });
 
   @override
@@ -171,28 +165,27 @@ class CircularButton extends StatelessWidget {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              color: isSelected
-                  ? Color.fromARGB(209, 62, 191, 67)
-                  : Color(0xFF6354ED),
+              color: isSelected ? Colors.white : Color(0xFF9CAAFA),
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.black, width: 4),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
-                  spreadRadius: 5,
-                  blurRadius: 5,
-                  offset: Offset(0, 3),
-                ),
-              ],
+              border: Border.all(
+                color: isSelected ? Color(0xFF05FF00) : Colors.transparent,
+                width: 4,
+              ),
             ),
             child: Center(
-              child: Icon(
-                icon,
-                size: 50,
-                color: isSelected
-                    ? Color(0xFF6354ED)
-                    : Color.fromARGB(255, 255, 255, 255),
-              ),
+              child: imagePath != null
+                  ? Image.asset(
+                      imagePath!,
+                      width: 118, // Adjusted width
+                      height: 118, // Adjusted height
+                    )
+                  : Icon(
+                      icon,
+                      size: 50,
+                      color: isSelected
+                          ? Color(0xFF6354ED)
+                          : Color.fromARGB(255, 255, 255, 255),
+                    ),
             ),
           ),
         ),
