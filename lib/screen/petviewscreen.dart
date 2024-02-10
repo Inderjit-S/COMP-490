@@ -1,12 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:aerogotchi/screen/homescreen.dart';
-import 'package:flutter/material.dart';
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
-import 'playingmenuscreen.dart'; // Import PlayingMenuScreen
+import 'package:aerogotchi/screen/playingmenuscreen.dart';
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:aerogotchi/screen/settingscreen.dart';
-import 'package:aerogotchi/screen/temphomescreen.dart';
 
 class PetViewScreen extends StatefulWidget {
   const PetViewScreen({Key? key}) : super(key: key);
@@ -22,26 +21,24 @@ class _PetViewScreenState extends State<PetViewScreen> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0), // Set the preferred height
+        preferredSize: Size.fromHeight(120.0),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           flexibleSpace: Container(
-            padding: const EdgeInsets.only(top: 60.0), // Adjust top padding
+            padding: const EdgeInsets.only(top: 60.0),
             child: Center(
               child: Text(
                 'PETVIEW',
                 style: TextStyle(
                   color: Color(0xFFAC90FF),
-                  fontSize: 32.0, // Increased font size
+                  fontSize: 40.0,
                   fontWeight: FontWeight.bold,
                   shadows: [
                     Shadow(
                       color: Color(0xFF4660E8),
-                      offset: Offset(
-                          0, 8), // Adjust the offset to create a lifting effect
-                      blurRadius:
-                          6, // Increase blur radius for a more prominent shadow
+                      offset: Offset(0, 8),
+                      blurRadius: 6,
                     ),
                   ],
                 ),
@@ -51,13 +48,12 @@ class _PetViewScreenState extends State<PetViewScreen> {
           centerTitle: true,
           actions: [
             IconButton(
-              // LOGOUT BUTTON
               icon: Icon(Icons.logout_sharp),
               onPressed: () {
-                //logout function from your authentication logic
-                // Navigate back to the home screen
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
               },
             ),
           ],
@@ -84,24 +80,18 @@ class _PetViewScreenState extends State<PetViewScreen> {
             top: MediaQuery.of(context).padding.top + 80,
             child: Column(
               children: [
-                SizedBox(height: 10),
+                SizedBox(height: 30),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildActionTopBox(
-                            width: screenWidth * 0.7), // 70% of screen width
-                        SizedBox(
-                            height:
-                                20), //SPACE BETWEEN IMAGE AND BUTTON BOX : TOP
-                        buildPetImageBox(width: screenWidth * 0.7), // Pet Image
-                        SizedBox(
-                            height:
-                                20), //SPACE BETWEEN IMAGE AND BUTTON BOX : BOTTOM
-                        buildBottomActionBox(
-                            width: screenWidth * 0.6), // Adjust width
+                        buildActionTopBox(width: screenWidth * 0.8),
+                        SizedBox(height: 20),
+                        buildPetImageBox(width: screenWidth * 0.80),
+                        SizedBox(height: 20),
+                        buildBottomActionBox(width: screenWidth * 0.7),
                       ],
                     ),
                   ),
@@ -118,35 +108,38 @@ class _PetViewScreenState extends State<PetViewScreen> {
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF1F426F),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Colors.black, // Black stroke
-          width: 2.0, // Thicker border
+          color: Color(0xFF18235B),
+          width: 3.0,
         ),
       ),
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 0),
       width: width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          buildCircularButton(Icons.abc_rounded, Color(0xFF929EC4), () {
+          buildCircularButton('assets/icons/droneIcon.png', Color(0xFF929EC4),
+              () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => DroneControlScreen()),
             );
-          }),
-          buildCircularButton(Icons.mood, Color(0xFF00FF0A), () {
+          }, 90), // Change icon size here
+          buildCircularButton('assets/icons/statusIcon.png', Color(0xFF00FF0A),
+              () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => StatusMenuScreen()),
             );
-          }),
-          buildCircularButton(Icons.settings, Color(0xFF6354ED), () {
+          }, 90), // Change icon size here
+          buildCircularButton('assets/icons/gearIcon.png', Color(0xFF6354ED),
+              () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => SettingScreen()),
             );
-          }),
+          }, 90), // Change icon size here
         ],
       ),
     );
@@ -156,22 +149,22 @@ class _PetViewScreenState extends State<PetViewScreen> {
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF666D8C),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(46),
         border: Border.all(
-          color: Colors.black, // Black stroke
-          width: 2.0, // Thicker border
+          color: Colors.black,
+          width: 2.0,
         ),
       ),
       width: width,
-      height: 250, // Increased height to accommodate text
+      height: 250,
       alignment: Alignment.center,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SmallerlogoWidget("background_image/aerogotchi.png"), // Image widget
-          SizedBox(height: 5), // Spacer between image and text
+          SmallerlogoWidget("background_image/aerogotchi.png"),
+          SizedBox(height: 5),
           Text(
-            'Character Name', // Add Character Name
+            'Character Name',
             style: TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -186,52 +179,42 @@ class _PetViewScreenState extends State<PetViewScreen> {
     return Container(
       decoration: BoxDecoration(
         color: Color(0xFF6354ED),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Colors.black, // Black stroke
-          width: 2.0, // Thicker border
+          color: Color(0xFF18235B),
+          width: 2.0,
         ),
       ),
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 0),
       width: width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          buildCircularButton(Icons.fastfood, Color(0xFF5EBBFF), () {
+          buildCircularButton('assets/icons/bluehamIcon.png', Color(0xFF5EBBFF),
+              () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => FoodMenuScreen()),
             );
-          }),
-          buildCircularButton(Icons.videogame_asset, Color(0xFFF692B0), () {
+          }, 100), // Change icon size here
+          buildCircularButton('assets/icons/gameIcon.png', Color(0xFFF692B0),
+              () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => PlayingMenuScreen()),
             );
-          }),
+          }, 100), // Change icon size here
         ],
       ),
     );
   }
 
   Widget buildCircularButton(
-      IconData iconData, Color color, VoidCallback onPressed) {
-    return Container(
-      width: 60,
-      height: 60,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-        border: Border.all(
-          color: Colors.black, // Black stroke
-          width: 2.0, // Thicker border
-        ),
-      ),
-      child: IconButton(
-        icon: Icon(iconData),
-        onPressed: onPressed,
-        color: Colors.blue,
-      ),
+      String assetPath, Color color, VoidCallback onPressed, double iconSize) {
+    return IconButton(
+      icon: Image.asset(assetPath, width: iconSize, height: iconSize),
+      onPressed: onPressed,
+      color: color,
     );
   }
 }
