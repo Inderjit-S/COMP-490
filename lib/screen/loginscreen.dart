@@ -36,8 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
               end: Alignment.bottomCenter),
         ),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: ListView(
+            shrinkWrap: true,
             children: <Widget>[
               SizedBox(
                 height: 0, // Adjusted height to create less space

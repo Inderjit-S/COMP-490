@@ -8,7 +8,7 @@ import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:aerogotchi/screen/settingscreen.dart';
 
 class PetViewScreen extends StatefulWidget {
-  const PetViewScreen({Key? key}) : super(key: key);
+  const PetViewScreen({super.key});
 
   @override
   _PetViewScreenState createState() => _PetViewScreenState();
@@ -21,18 +21,18 @@ class _PetViewScreenState extends State<PetViewScreen> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(120.0),
+        preferredSize: const Size.fromHeight(120.0),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           flexibleSpace: Container(
-            padding: const EdgeInsets.only(top: 60.0),
-            child: Center(
+            padding: const EdgeInsets.only(top: 100.0),
+            child: const Center(
               child: Text(
                 'PETVIEW',
                 style: TextStyle(
                   color: Color(0xFFAC90FF),
-                  fontSize: 40.0,
+                  fontSize: 35.0,
                   fontWeight: FontWeight.bold,
                   shadows: [
                     Shadow(
@@ -48,11 +48,11 @@ class _PetViewScreenState extends State<PetViewScreen> {
           centerTitle: true,
           actions: [
             IconButton(
-              icon: Icon(Icons.logout_sharp),
+              icon: const Icon(Icons.logout_sharp),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
                 );
               },
             ),
@@ -80,17 +80,17 @@ class _PetViewScreenState extends State<PetViewScreen> {
             top: MediaQuery.of(context).padding.top + 80,
             child: Column(
               children: [
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         buildActionTopBox(width: screenWidth * 0.8),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         buildPetImageBox(width: screenWidth * 0.80),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         buildBottomActionBox(width: screenWidth * 0.7),
                       ],
                     ),
@@ -107,37 +107,37 @@ class _PetViewScreenState extends State<PetViewScreen> {
   Container buildActionTopBox({required double width}) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xFF1F426F),
+        color: const Color(0xFF1F426F),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Color(0xFF18235B),
+          color: const Color(0xFF18235B),
           width: 3.0,
         ),
       ),
-      padding: EdgeInsets.symmetric(vertical: 0),
+      padding: const EdgeInsets.symmetric(vertical: 0),
       width: width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          buildCircularButton('assets/icons/droneIcon.png', Color(0xFF929EC4),
-              () {
+          buildCircularButton(
+              'assets/icons/droneIcon.png', const Color(0xFF929EC4), () {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => DroneControlScreen()),
             );
           }, 90), // Change icon size here
-          buildCircularButton('assets/icons/statusIcon.png', Color(0xFF00FF0A),
-              () {
+          buildCircularButton(
+              'assets/icons/statusIcon.png', const Color(0xFF00FF0A), () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => StatusMenuScreen()),
+              MaterialPageRoute(builder: (context) => const StatusMenuScreen()),
             );
           }, 90), // Change icon size here
-          buildCircularButton('assets/icons/gearIcon.png', Color(0xFF6354ED),
-              () {
+          buildCircularButton(
+              'assets/icons/gearIcon.png', const Color(0xFF6354ED), () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => SettingScreen()),
+              MaterialPageRoute(builder: (context) => const SettingScreen()),
             );
           }, 90), // Change icon size here
         ],
@@ -148,7 +148,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
   Container buildPetImageBox({required double width}) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xFF666D8C),
+        color: const Color(0xFF666D8C),
         borderRadius: BorderRadius.circular(46),
         border: Border.all(
           color: Colors.black,
@@ -156,14 +156,14 @@ class _PetViewScreenState extends State<PetViewScreen> {
         ),
       ),
       width: width,
-      height: 250,
-      alignment: Alignment.center,
+      height: 350,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
         children: [
           SmallerlogoWidget("background_image/aerogotchi.png"),
-          SizedBox(height: 5),
-          Text(
+          const SizedBox(height: 5),
+          const Text(
             'Character Name',
             style: TextStyle(
               color: Colors.white,
@@ -178,30 +178,30 @@ class _PetViewScreenState extends State<PetViewScreen> {
   Container buildBottomActionBox({required double width}) {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xFF6354ED),
+        color: const Color(0xFF6354ED),
         borderRadius: BorderRadius.circular(10),
         border: Border.all(
-          color: Color(0xFF18235B),
+          color: const Color(0xFF18235B),
           width: 2.0,
         ),
       ),
-      padding: EdgeInsets.symmetric(vertical: 0),
       width: width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          buildCircularButton('assets/icons/bluehamIcon.png', Color(0xFF5EBBFF),
-              () {
+          buildCircularButton(
+              'assets/icons/bluehamIcon.png', const Color(0xFF5EBBFF), () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => FoodMenuScreen()),
+              MaterialPageRoute(builder: (context) => const FoodMenuScreen()),
             );
           }, 100), // Change icon size here
-          buildCircularButton('assets/icons/gameIcon.png', Color(0xFFF692B0),
-              () {
+          buildCircularButton(
+              'assets/icons/gameIcon.png', const Color(0xFFF692B0), () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PlayingMenuScreen()),
+              MaterialPageRoute(
+                  builder: (context) => const PlayingMenuScreen()),
             );
           }, 100), // Change icon size here
         ],
