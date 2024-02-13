@@ -13,19 +13,29 @@ class IdleScreen extends StatefulWidget {
 class _IdleScreenState extends State<IdleScreen> {
   bool isTextVisible = true;
 
+  Timer? _timer;
   @override
   void initState() {
     super.initState();
 
     // Set up a timer to toggle text visibility every 800 milliseconds (adjust as needed)
-    Timer.periodic(Duration(milliseconds: 800), (timer) {
-      setState(() {
-        isTextVisible = !isTextVisible;
-      });
+    _timer = Timer.periodic(Duration(milliseconds: 800), (timer) {
+      if(mounted) {
+        setState(() {
+          isTextVisible = !isTextVisible;
+        });
+      }
+      else{ //cancel timer to prevent setState() calls
+        timer.cancel();
+      }
     });
   }
 
   @override
+  void dispose(){
+    _timer?.cancel();
+        super.dispose();
+  }
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
