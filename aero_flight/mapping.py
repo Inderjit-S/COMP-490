@@ -10,6 +10,8 @@ import cv2
 
 import math
 
+import sys
+
 ######## PARAMETERS ###########
 
 fSpeed = 117 / 10  # Forward Speed in cm/s   (15cm/s)
@@ -107,6 +109,8 @@ def getKeyboardInput():
     if kp.getKey("q"): me.land(); sleep(3)
 
     if kp.getKey("e"): me.takeoff()
+
+    if kp.getKey("p"): sys.exit()
 
     sleep(interval)
 
