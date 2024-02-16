@@ -46,7 +46,7 @@ points = [(0, 0), (0, 0)]
 def getKeyboardInput():
     lr, fb, ud, yv = 0, 0, 0, 0
 
-    speed = 30
+    speed = 15
 
     aspeed = 50
 

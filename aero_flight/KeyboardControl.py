@@ -1,6 +1,7 @@
 import KeyPressModule as KP
 from djitellopy import Tello
 from time import sleep
+import sys
 
 KP.init()
 me = Tello()
@@ -35,6 +36,9 @@ def get_keyboard_input():
         me.land()
     if KP.getKey("e"):
         me.takeoff()
+
+    if KP.getKey("p"):
+        sys.exit()
 
     return [lr, fb, ud, yv]
 
