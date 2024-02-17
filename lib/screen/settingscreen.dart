@@ -1,3 +1,4 @@
+import 'package:aerogotchi/screen/petnamescreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:flutter/material.dart';
 import '../reusable_widget/reusable_widget.dart';
@@ -69,7 +70,13 @@ class _SettingsState extends State<SettingScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PetNameScreen()),
+                        );
+                      },
                       style: ElevatedButton.styleFrom(
                         primary: Color(0xFF2D7ADE),
                         onPrimary: Color(0xFFA990FF),

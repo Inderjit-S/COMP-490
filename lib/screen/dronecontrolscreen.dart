@@ -11,22 +11,29 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Drone Control', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.black,
+        title: Text('Drone Control', style: TextStyle(color: Colors.white)),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
       ),
-      body: LandscapeDroneControlMenu(
-        onHomePressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => TempScreen()),
-          );
-        },
+      body: Container(
+        color: Colors.black,
+        child: LandscapeDroneControlMenu(
+          onHomePressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => TempScreen()),
+            );
+          },
+        ),
       ),
     );
   }
@@ -49,10 +56,13 @@ class LandscapeDroneControlMenu extends StatelessWidget {
             height: 100,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.black),
+              border: Border.all(color: Colors.white),
             ),
             child: Center(
-              child: Text('Joystick 1'),
+              child: Text(
+                'Joystick 1',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
@@ -64,10 +74,13 @@ class LandscapeDroneControlMenu extends StatelessWidget {
             height: 100,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.black),
+              border: Border.all(color: Colors.white),
             ),
             child: Center(
-              child: Text('Joystick 2'),
+              child: Text(
+                'Joystick 2',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ),
@@ -85,7 +98,7 @@ class LandscapeDroneControlMenu extends StatelessWidget {
                   icon: CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.grey.withOpacity(0.5),
-                    child: Icon(Icons.home, color: Colors.grey),
+                    child: Icon(Icons.home, color: Colors.white),
                   ),
                 ),
                 SizedBox(width: 20),
@@ -104,7 +117,7 @@ class LandscapeDroneControlMenu extends StatelessWidget {
                   icon: CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.grey.withOpacity(0.5),
-                    child: Icon(Icons.camera_alt, color: Colors.grey),
+                    child: Icon(Icons.camera_alt, color: Colors.white),
                   ),
                 ),
               ],

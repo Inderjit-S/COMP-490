@@ -1,7 +1,7 @@
-
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:flutter/material.dart';
 import '../reusable_widget/reusable_widget.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class PetNameScreen extends StatefulWidget {
   const PetNameScreen({Key? key}) : super(key: key);
@@ -11,24 +11,31 @@ class PetNameScreen extends StatefulWidget {
 }
 
 class _PetNameScreen extends State<PetNameScreen> {
-  TextEditingController CharacterName = TextEditingController();
+  TextEditingController characterNameController = TextEditingController();
+
+  // Reference to 'petname' node in the database
+  DatabaseReference databaseReference =
+      FirebaseDatabase.instance.reference().child('petname');
+
+  void savePetName(String petName) {
+    databaseReference.set(petName); // Set the pet name in the database
+  }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery
-        .of(context)
-        .size
-        .width;
-    double screenHeight = MediaQuery
-        .of(context)
-        .size
-        .height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
 
     // Adjust these variables for container width and height
     double containerWidth = screenWidth * 0.75;
     double containerHeight = screenHeight * 0.2;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor:
+            Colors.blue[700], // Set app bar background to transparent
+        elevation: 0,
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -49,7 +56,6 @@ class _PetNameScreen extends State<PetNameScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SmallerlogoWidget("background_image/aerogotchi.png"),
-                // image file path for logo
                 Text(
                   'NAME MENU',
                   style: TextStyle(
@@ -69,14 +75,13 @@ class _PetNameScreen extends State<PetNameScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'pick a name:',
+                  'Pick a name:',
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF6354ED),
                   ),
                 ),
-                // Adjust width and height of the container
                 Container(
                   width: containerWidth,
                   height: containerHeight,
@@ -86,17 +91,29 @@ class _PetNameScreen extends State<PetNameScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       reusableTextField(
-                        "e.g.Sparky,AeroBot,SkyDancer",
+                        "e.g. Sparky, AeroBot, SkyDancer",
                         Icons.pets_outlined,
                         false,
-                        CharacterName,
+                        characterNameController,
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => PetViewScreen()),
-                          );
+                          String petName = characterNameController.text;
+                          if (petName.isNotEmpty) {
+                            savePetName(
+                                petName); // Save the pet name to the database
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => PetViewScreen()),
+                            );
+                          } else {
+                            // Show error message if pet name is empty
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text('Please enter a pet name')),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           primary: Color(0xFF92B1F6),
@@ -111,19 +128,18 @@ class _PetNameScreen extends State<PetNameScreen> {
                           ),
                         ),
                         child: Text(
-                          'Back',
+                          'Save Pet Name & Continue',
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
                     ],
                   ),
                 ),
-                ],
+              ],
             ),
-           ),
-         ),
-       ),
+          ),
+        ),
+      ),
     );
   }
 }
-
