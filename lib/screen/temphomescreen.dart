@@ -7,9 +7,11 @@ import 'package:aerogotchi/screen/signupscreen.dart';
 import 'package:flutter/material.dart';
 import 'playingmenuscreen.dart'; // Import PlayingMenuScreen
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class TempScreen extends StatefulWidget {
-  const TempScreen({Key? key}) : super(key: key);
+  final String petName;
+  const TempScreen({Key? key, required this.petName}) : super(key: key);
 
   @override
   _TempScreenState createState() => _TempScreenState();
@@ -32,7 +34,7 @@ class _TempScreenState extends State<TempScreen> {
                 // Navigate to PlayingMenuScreen
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => PetViewScreen()),
+                  MaterialPageRoute(builder: (context) => PetViewScreen(petName: widget.petName,)),
                 );
               },
             ),

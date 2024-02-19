@@ -3,9 +3,11 @@ import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String petName;
+  const HomeScreen({Key? key, required this.petName}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -19,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ElevatedButton(
           child: Text("Logout"),
           onPressed: () {
-            _showLogoutConfirmationDialog(context); // Show confirmation dialog
+            _showLogoutConfirmationDialog(context, widget.petName); // Pass petName to the dialog
           },
         ),
       ),
@@ -27,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Function to show the logout confirmation dialog
-  void _showLogoutConfirmationDialog(BuildContext context) {
+  void _showLogoutConfirmationDialog(BuildContext context, String petName) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -38,18 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
-                // Navigate back to the PetViewScreen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => PetViewScreen()),
-                );
               },
               child: Text("Cancel"),
             ),
             TextButton(
               onPressed: () {
-                _logoutAndNavigateToLogin(
-                    context); // Logout and navigate to login
+                _logoutAndNavigateToLogin(context, petName); // Pass petName to the logout function
               },
               child: Text("Logout"),
             ),
@@ -60,12 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Function to logout and navigate to login screen
-  void _logoutAndNavigateToLogin(BuildContext context) {
+  void _logoutAndNavigateToLogin(BuildContext context, String petName) {
     FirebaseAuth.instance.signOut().then((value) {
       print("Signed Out");
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
+      );
+      // Pass petName to the PetViewScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => PetViewScreen(petName: petName)),
       );
     });
   }

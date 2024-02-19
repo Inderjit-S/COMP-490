@@ -4,7 +4,8 @@ import '../reusable_widget/reusable_widget.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class PetNameScreen extends StatefulWidget {
-  const PetNameScreen({Key? key}) : super(key: key);
+  final String petName;
+  const PetNameScreen({Key? key, required this.petName}) : super(key: key);
 
   @override
   State<PetNameScreen> createState() => _PetNameScreen();
@@ -105,7 +106,7 @@ class _PetNameScreen extends State<PetNameScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PetViewScreen()),
+                                  builder: (context) => PetViewScreen(petName: widget.petName,)),
                             );
                           } else {
                             // Show error message if pet name is empty

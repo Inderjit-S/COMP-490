@@ -1,3 +1,4 @@
+import 'package:aerogotchi/screen/petnamescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:aerogotchi/screen/homescreen.dart';
@@ -6,15 +7,18 @@ import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:aerogotchi/screen/settingscreen.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class PetViewScreen extends StatefulWidget {
-  const PetViewScreen({super.key});
+  final String petName;
+  const PetViewScreen({Key? key, required this.petName}) : super(key: key);
 
   @override
   _PetViewScreenState createState() => _PetViewScreenState();
 }
 
 class _PetViewScreenState extends State<PetViewScreen> {
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -52,7 +56,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) =>  HomeScreen(petName: widget.petName,)),
                 );
               },
             ),
@@ -123,7 +127,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
               'assets/icons/droneIcon.png', const Color(0xFF929EC4), () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => DroneControlScreen()),
+              MaterialPageRoute(builder: (context) => DroneControlScreen(petName: widget.petName,)),
             );
           }, 90), // Change icon size here
           buildCircularButton(
@@ -137,7 +141,8 @@ class _PetViewScreenState extends State<PetViewScreen> {
               'assets/icons/gearIcon.png', const Color(0xFF6354ED), () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SettingScreen()),
+              MaterialPageRoute(
+                  builder: (context) =>  SettingScreen(petName: widget.petName)),
             );
           }, 90), // Change icon size here
         ],
@@ -163,11 +168,11 @@ class _PetViewScreenState extends State<PetViewScreen> {
         children: [
           SmallerlogoWidget("background_image/aerogotchi.png"),
           const SizedBox(height: 5),
-          const Text(
-            'Character Name',
+           Text(
+           '${widget.petName}',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20,
+              fontSize: 26,
             ),
           ),
         ],

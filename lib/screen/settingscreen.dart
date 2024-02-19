@@ -2,9 +2,11 @@ import 'package:aerogotchi/screen/petnamescreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:flutter/material.dart';
 import '../reusable_widget/reusable_widget.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class SettingScreen extends StatefulWidget {
-  const SettingScreen({Key? key}) : super(key: key);
+  final String petName;
+  const SettingScreen({Key? key, required this.petName}) : super(key: key);
 
   @override
   State<SettingScreen> createState() => _SettingsState();
@@ -74,7 +76,7 @@ class _SettingsState extends State<SettingScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PetNameScreen()),
+                              builder: (context) => PetNameScreen(petName: widget.petName)),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -99,7 +101,7 @@ class _SettingsState extends State<SettingScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PetViewScreen()),
+                              builder: (context) => PetViewScreen(petName: widget.petName)),
                         );
                       },
                       style: ElevatedButton.styleFrom(

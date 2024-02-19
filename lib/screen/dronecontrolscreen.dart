@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/screen/temphomescreen.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class DroneControlScreen extends StatefulWidget {
+  final String petName;
+  const DroneControlScreen({Key? key, required this.petName}) : super(key: key);
   @override
   _DroneControlScreenState createState() => _DroneControlScreenState();
 }
@@ -30,7 +33,7 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
           onHomePressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => TempScreen()),
+              MaterialPageRoute(builder: (context) => TempScreen(petName: widget.petName,)),
             );
           },
         ),

@@ -11,6 +11,7 @@ import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,8 +54,9 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         primarySwatch: Colors.blue,
       ),
-      // home: const PetViewScreen(),
-      home: const TempScreen(), // Temp screen to test shit out
+      // home: const PetViewScreen(petName: ''),
+      home: IdleScreen(),
+     // home:  TempScreen(petName: '',), // Temp screen to test shit out
       //home: const PetNameScreen(),
     );
   }
