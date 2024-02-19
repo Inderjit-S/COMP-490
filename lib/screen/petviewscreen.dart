@@ -1,4 +1,5 @@
 import 'package:aerogotchi/screen/petnamescreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:aerogotchi/screen/homescreen.dart';

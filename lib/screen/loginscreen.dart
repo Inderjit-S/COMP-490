@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:aerogotchi/screen/homescreen.dart';
+import 'package:aerogotchi/screen/petnamescreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:aerogotchi/screen/signupscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -92,11 +95,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     DatabaseEvent event = await dbRef.once();
                     String petName = event.snapshot.value.toString();
 
-                    // Pass the pet name to the PetViewScreen
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PetViewScreen(petName: petName)));
+                    // Check if the pet name exists
+                    if (petName.isNotEmpty && petName != null) {
+                      // Pass the pet name to the PetViewScreen
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PetViewScreen(petName: petName)));
+                    } else {
+                      // Navigate to the PetNameScreen
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>  PetNameScreen(petName: null)));
+                    }
                   } on FirebaseAuthException catch (e) {
                     print("Error: ${e.toString()}");
                   }; //enable sign in button to show up
