@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class StatusMenuScreen extends StatefulWidget {
   const StatusMenuScreen({Key? key}) : super(key: key);
@@ -12,10 +13,75 @@ class _StatusMenuScreenState extends State<StatusMenuScreen> {
   // ********** STATUS BAR LEVEL **********
   // *************************************
 
+
+
   // Set stats values here
-  int energyLevel = 6;
-  int hungerLevel = 3;
-  int happinessLevel = 8;
+  int energyLevel = 0;
+  int hungerLevel = 0;
+  int happinessLevel = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the level variables
+    getEnergyLvl().then((value) { //calls the function getEnergy
+      setState(() {
+        energyLevel = value; //sets energyLevel to database energy value.
+      });
+    });
+    getHappinessLvl().then((value) {//calls the function getHappiness
+      setState(() {
+        happinessLevel = value; //sets happinessLevel to database happiness value.
+      });
+    });
+    getHungerLvl().then((value) { //calls the function getHunger
+      setState(() {
+        hungerLevel = value; //sets hungerLevel to database hunger value.
+      });
+    });
+  }
+  // Functions to retrieve the Energy,Happiness,Hunger name from the database
+  Future<int> getEnergyLvl() async {
+    final dbRefEnergy = FirebaseDatabase.instance.reference().child(
+        'energy_level');
+    final snapshot = await dbRefEnergy.once();
+    final data = snapshot.snapshot.value;
+    if(data is int)
+      {
+        return data;
+      }
+    else{
+      throw Exception('Invalid data type');
+    }
+  }
+
+  Future<int> getHappinessLvl() async {
+    final dbRefHappiness = FirebaseDatabase.instance.reference().child(
+        'happiness_level');
+    final snapshot = await dbRefHappiness.once();
+    final data = snapshot.snapshot.value;
+    if(data is int)
+    {
+      return data;
+    }
+    else{
+      throw Exception('Invalid data type');
+    }
+  }
+
+  Future<int> getHungerLvl() async {
+    final dbRefHunger = FirebaseDatabase.instance.reference().child(
+        'hunger_level');
+    final snapshot = await dbRefHunger.once();
+    final data = snapshot.snapshot.value;
+    if(data is int)
+    {
+      return data;
+    }
+    else{
+      throw Exception('Invalid data type');
+    }
+  }
 
   // *************************************
 

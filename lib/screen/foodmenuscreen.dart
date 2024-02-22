@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class FoodMenuScreen extends StatefulWidget {
   const FoodMenuScreen({Key? key}) : super(key: key);
@@ -10,8 +11,30 @@ class FoodMenuScreen extends StatefulWidget {
 class _FoodMenuScreenState extends State<FoodMenuScreen> {
   int? selectedButtonIndex;
 
+  // Retrieve the Energy,Happiness,Hunger name from the database
+  final dbRefEnergy = FirebaseDatabase.instance.reference().child('energy_level');
+  final dbRefHappiness = FirebaseDatabase.instance.reference().child('happiness_level');
+  final dbRefHunger = FirebaseDatabase.instance.reference().child('hunger_level');
+
+
+  /*void saveEnergyLevel(int Energy_lvl)
+  {
+    dbRefEnergy.set(Energy_lvl);
+  }
+
+  void saveHappinessLevel(int Happiness_lvl)
+  {
+    dbRefHappiness.set(Happiness_lvl);
+  }
+
+  void saveHungerLevel(int Hunger_lvl)
+  {
+    dbRefHunger.set(Hunger_lvl);
+  }*/
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(130.0),
@@ -96,16 +119,20 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                       CircularButton(
                         imagePath: 'assets/icons/hamIcon.png',
                         isSelected: selectedButtonIndex == 0,
-                        onPressed: () {
+                        onPressed: () async {
                           setState(() {
                             selectedButtonIndex = 0;
                           });
+                          final currentHungerLevel = await dbRefHunger.once().then((event) => event.snapshot.value as int?);
+                          if (currentHungerLevel != null) {
+                            await dbRefHunger.set(currentHungerLevel + 1); //updates hunger level when clicked once.
+                          }
                         },
                       ),
                       CircularButton(
                         imagePath: 'assets/icons/carrotIcon.png',
                         isSelected: selectedButtonIndex == 1,
-                        onPressed: () {
+                        onPressed: () async {
                           setState(() {
                             selectedButtonIndex = 1;
                           });
@@ -114,16 +141,16 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                       CircularButton(
                         imagePath: 'assets/icons/icecreamIcon.png',
                         isSelected: selectedButtonIndex == 2,
-                        onPressed: () {
+                        onPressed: () async {
                           setState(() {
                             selectedButtonIndex = 2;
                           });
-                        },
+                        }
                       ),
                       CircularButton(
                         imagePath: 'assets/icons/breadIcon.png',
                         isSelected: selectedButtonIndex == 3,
-                        onPressed: () {
+                        onPressed: () async {
                           setState(() {
                             selectedButtonIndex = 3;
                           });
