@@ -1,6 +1,7 @@
 import KeyPressModule as KP
 from djitellopy import Tello
 from time import sleep
+import cv2
 import sys
 
 KP.init()
@@ -32,9 +33,9 @@ def get_keyboard_input():
     elif KP.getKey("d"):
         yv = -speed
 
-    if KP.getKey("q"):
-        me.land()
     if KP.getKey("e"):
+        me.land()
+    if KP.getKey("q"):
         me.takeoff()
 
     if KP.getKey("p"):
@@ -42,8 +43,13 @@ def get_keyboard_input():
 
     return [lr, fb, ud, yv]
 
-
+me.streamon()
 while True:
+    img = me.get_frame_read().frame
+    img = cv2.resize(img, (360, 240))
+    cv2.imshow("Image", img)
+    cv2.waitKey(1)
+
     vals = get_keyboard_input()
     me.send_rc_control(vals[0], vals[1], vals[2], vals[3])
     sleep(0.05)
