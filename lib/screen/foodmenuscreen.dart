@@ -12,10 +12,12 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
   int? selectedButtonIndex;
 
   // Retrieve the Energy,Happiness,Hunger name from the database
-  final dbRefEnergy = FirebaseDatabase.instance.reference().child('energy_level');
-  final dbRefHappiness = FirebaseDatabase.instance.reference().child('happiness_level');
-  final dbRefHunger = FirebaseDatabase.instance.reference().child('hunger_level');
-
+  final dbRefEnergy =
+      FirebaseDatabase.instance.reference().child('energy_level');
+  final dbRefHappiness =
+      FirebaseDatabase.instance.reference().child('happiness_level');
+  final dbRefHunger =
+      FirebaseDatabase.instance.reference().child('hunger_level');
 
   /*void saveEnergyLevel(int Energy_lvl)
   {
@@ -34,7 +36,6 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(130.0),
@@ -123,9 +124,18 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 0;
                           });
-                          final currentHungerLevel = await dbRefHunger.once().then((event) => event.snapshot.value as int?);
+                          final currentHungerLevel = await dbRefHunger
+                              .once()
+                              .then((event) => event.snapshot.value as int?);
                           if (currentHungerLevel != null) {
-                            await dbRefHunger.set(currentHungerLevel + 1); //updates hunger level when clicked once.
+                            if (currentHungerLevel == 10) {
+                              //prevents overflow
+                              await dbRefHunger.set(
+                                  currentHungerLevel); //updates hunger level when clicked once.
+                            } else {
+                              await dbRefHunger.set(currentHungerLevel +
+                                  1); //updates hunger level when clicked once.ss
+                            }
                           }
                         },
                       ),
@@ -136,17 +146,42 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 1;
                           });
+                          final currentHungerLevel = await dbRefHunger
+                              .once()
+                              .then((event) => event.snapshot.value as int?);
+                          if (currentHungerLevel != null) {
+                            if (currentHungerLevel == 10) {
+                              //prevents overflow
+                              await dbRefHunger.set(
+                                  currentHungerLevel); //updates hunger level when clicked once.
+                            } else {
+                              await dbRefHunger.set(currentHungerLevel +
+                                  1); //updates hunger level when clicked once.ss
+                            }
+                          }
                         },
                       ),
                       CircularButton(
-                        imagePath: 'assets/icons/icecreamIcon.png',
-                        isSelected: selectedButtonIndex == 2,
-                        onPressed: () async {
-                          setState(() {
-                            selectedButtonIndex = 2;
-                          });
-                        }
-                      ),
+                          imagePath: 'assets/icons/icecreamIcon.png',
+                          isSelected: selectedButtonIndex == 2,
+                          onPressed: () async {
+                            setState(() {
+                              selectedButtonIndex = 2;
+                            });
+                            final currentHappinessLevel = await dbRefHunger
+                                .once()
+                                .then((event) => event.snapshot.value as int?);
+                            if (currentHappinessLevel != null) {
+                              if (currentHappinessLevel == 10) {
+                                //prevents overflow
+                                await dbRefHunger.set(
+                                    currentHappinessLevel); //updates hunger level when clicked once.
+                              } else {
+                                await dbRefHappiness.set(currentHappinessLevel +
+                                    1); //updates hunger level when clicked once.ss
+                              }
+                            }
+                          }),
                       CircularButton(
                         imagePath: 'assets/icons/breadIcon.png',
                         isSelected: selectedButtonIndex == 3,
