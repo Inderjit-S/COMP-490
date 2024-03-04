@@ -1,5 +1,3 @@
-import 'package:aerogotchi/screen/petnamescreen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:aerogotchi/screen/homescreen.dart';
@@ -8,7 +6,8 @@ import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:aerogotchi/screen/settingscreen.dart';
-import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
+import 'package:firebase_database/firebase_database.dart'; 
+import 'dart:async';
 
 class PetViewScreen extends StatefulWidget {
   final String petName;
@@ -19,6 +18,78 @@ class PetViewScreen extends StatefulWidget {
 }
 
 class _PetViewScreenState extends State<PetViewScreen> {
+  int hungerLevel = 0;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+  getHungerLvl().then((value) {
+    setState(() {
+      hungerLevel = value;
+    });
+  }).catchError((error) {
+    print('Error fetching hunger level: $error');
+  });
+
+  // Start the timer only if the initial hunger level is retrieved successfully
+ //Change to minutes- Timer.periodic(Duration(minutes: 1), (timer) {
+  Timer.periodic(Duration(seconds: 5), (timer) {
+
+    if (hungerLevel > 0) {
+      setState(() {
+        hungerLevel--; // Decrease hunger level every minute
+      });
+      updateHungerLevel(hungerLevel).catchError((error) {
+        print('Error updating hunger level: $error');
+      });
+    }
+    if(hungerLevel==0){ hungerLevel=0;}
+  });
+}
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the screen is disposed
+    super.dispose();
+  }
+
+  Future<int> getHungerLvl() async {
+    final dbRefHunger = FirebaseDatabase.instance.reference().child(
+        'hunger_level');
+    final snapshot = await dbRefHunger.once();
+    final data = snapshot.snapshot.value;
+    if(data is int)
+    {
+      return data;
+    }
+    else{
+      throw Exception('Invalid data type');
+    }
+  }
+
+  Future<void> updateHungerLevel(int level) async {
+    final dbRefHunger = FirebaseDatabase.instance.reference().child('hunger_level');
+    await dbRefHunger.set(level).catchError((error) {
+      print('Error updating hunger level: $error');
+      throw Exception('Failed to update hunger level');
+    });
+  }
+
+  void decreaseHungerLevel() async {
+    try {
+      final currentHungerLevel = await getHungerLvl();
+      if (currentHungerLevel > 0) {
+        final newHungerLevel = currentHungerLevel - 1;
+        setState(() {
+          hungerLevel = newHungerLevel;
+        });
+        await updateHungerLevel(newHungerLevel);
+      }
+    } catch (error) {
+      print('Error decreasing hunger level: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -169,12 +240,12 @@ class _PetViewScreenState extends State<PetViewScreen> {
         children: [
           SmallerlogoWidget("background_image/aerogotchi.png"),
           const SizedBox(height: 5),
-           Text(
-           '${widget.petName}',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 26,
-            ),
+            Text(
+          '${widget.petName} - Hunger Level: $hungerLevel', // Concatenate hunger level with pet name
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 26,
+          ),
           ),
         ],
       ),
