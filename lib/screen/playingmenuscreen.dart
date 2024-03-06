@@ -1,7 +1,9 @@
+import 'package:aerogotchi/components/levels/happiness_level_service.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class PlayingMenuScreen extends StatefulWidget {
-  const PlayingMenuScreen({Key? key}) : super(key: key);
+  const PlayingMenuScreen({super.key});
 
   @override
   _PlayingMenuScreenState createState() => _PlayingMenuScreenState();
@@ -9,6 +11,20 @@ class PlayingMenuScreen extends StatefulWidget {
 
 class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
   int selectedOptionIndex = -1; // Initialize with no selected option
+  final DatabaseReference dbRefHappiness =
+      FirebaseDatabase.instance.reference().child('happiness_level');
+
+  void navigateToTempScreenAndUpdateHappiness(int index) async {
+    // Navigate to the temporary screen for the selected option
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => getTempScreen(selectedOptionIndex)),
+    );
+
+    // Update happiness level
+    await HappinessLevelService.tryUpdateHappinessLevel(2);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,14 +33,15 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(130.0), // Increased height of app bar
+        preferredSize:
+            const Size.fromHeight(130.0), // Increased height of app bar
         child: AppBar(
           backgroundColor:
               Colors.transparent, // Set app bar background to transparent
           elevation: 0, // Remove app bar elevation
           flexibleSpace: Container(
             padding: const EdgeInsets.only(top: 75.0), // Adjust top padding
-            child: Center(
+            child: const Center(
               child: Text(
                 'PLAYING MENU',
                 style: TextStyle(
@@ -45,12 +62,12 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
             ),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               // Navigate back to the previous screen
               Navigator.pop(context);
             },
-            color: Color.fromARGB(68, 0, 0, 0)
+            color: const Color.fromARGB(68, 0, 0, 0)
                 .withOpacity(0.3), // Lower opacity of back button
           ),
         ),
@@ -72,7 +89,7 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 25, // Adjust the space between app bar and menu options
             ),
             Expanded(
@@ -106,21 +123,14 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
               Padding(
                 padding: const EdgeInsets.only(
                     bottom: 16.0, left: 16.0, right: 16.0),
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   child: TextButton(
-                    onPressed: () {
-                      // Navigate to the temporary screen for the selected option
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                getTempScreen(selectedOptionIndex)),
-                      );
-                    },
+                    onPressed: () => navigateToTempScreenAndUpdateHappiness(
+                        selectedOptionIndex),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                        EdgeInsets.symmetric(
+                        const EdgeInsets.symmetric(
                             vertical: 40,
                             horizontal: 40), // Adjust inset padding
                       ),
@@ -138,12 +148,12 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
                       side: MaterialStateProperty.all<BorderSide>(
                           BorderSide(color: Colors.white.withOpacity(0.05))),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
-                        RoundedRectangleBorder(
+                        const RoundedRectangleBorder(
                           borderRadius: BorderRadius.horizontal(),
                         ),
                       ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Go',
                       style: TextStyle(
                         fontSize: 24,
@@ -183,7 +193,7 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
                           color: Colors.black.withOpacity(0.3),
                           spreadRadius: 2,
                           blurRadius: 4,
-                          offset: Offset(0, 2),
+                          offset: const Offset(0, 2),
                         ),
                       ]
                     : [], // Apply shadow if selected
@@ -196,14 +206,16 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
             });
           },
         ),
-        SizedBox(height: 0.5), // Adjust the space between title and description
+        const SizedBox(
+            height: 0.5), // Adjust the space between title and description
         Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
               description,
               style: TextStyle(
-                color: Color.fromRGBO(255, 255, 255, 0.525).withOpacity(0.6),
+                color:
+                    const Color.fromRGBO(255, 255, 255, 0.525).withOpacity(0.6),
                 fontSize: 13.0, // Font size for description
               ),
               textAlign: TextAlign.center,
@@ -242,7 +254,9 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
     }
   }
 
-  // Method to get temporary screen based on index
+  // Temp Screen Widgets
+  // (These can be in separate files if preferred)
+
   Widget getTempScreen(int index) {
     switch (index) {
       case 0:
@@ -271,7 +285,7 @@ class TempScreenPM1 extends StatelessWidget {
       body: Center(
         child: Text(
           'This is a temporary screen for $optionName',
-          style: TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 24),
         ),
       ),
     );
@@ -292,7 +306,7 @@ class TempScreenPM2 extends StatelessWidget {
       body: Center(
         child: Text(
           'This is a temporary screen for $optionName',
-          style: TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 24),
         ),
       ),
     );
@@ -313,7 +327,7 @@ class TempScreenPM3 extends StatelessWidget {
       body: Center(
         child: Text(
           'This is a temporary screen for $optionName',
-          style: TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 24),
         ),
       ),
     );

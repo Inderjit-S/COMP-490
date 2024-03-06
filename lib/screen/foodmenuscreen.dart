@@ -1,8 +1,10 @@
+import 'package:aerogotchi/components/levels/happiness_level_service.dart';
+import 'package:aerogotchi/components/levels/hunger_level_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class FoodMenuScreen extends StatefulWidget {
-  const FoodMenuScreen({Key? key}) : super(key: key);
+  const FoodMenuScreen({super.key});
 
   @override
   _FoodMenuScreenState createState() => _FoodMenuScreenState();
@@ -38,13 +40,13 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(130.0),
+        preferredSize: const Size.fromHeight(130.0),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           flexibleSpace: Container(
             padding: const EdgeInsets.only(top: 80.0),
-            child: Center(
+            child: const Center(
               child: Text(
                 'FOOD MENU',
                 style: TextStyle(
@@ -63,12 +65,12 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
             ),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pop(context);
               // Implement back button functionality
             },
-            color: Color.fromARGB(68, 0, 0, 0).withOpacity(0.4),
+            color: const Color.fromARGB(68, 0, 0, 0).withOpacity(0.4),
           ),
         ),
       ),
@@ -93,7 +95,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text(
+                const Text(
                   'Please select a food from the menu below',
                   style: TextStyle(
                     fontSize: 20.0,
@@ -101,19 +103,20 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Color(0xFF9CAAFA),
+                    color: const Color(0xFF9CAAFA),
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Color(0xFF18235B), width: 4),
+                    border:
+                        Border.all(color: const Color(0xFF18235B), width: 4),
                   ),
                   child: GridView.count(
                     shrinkWrap: true,
                     crossAxisCount: 2,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     crossAxisSpacing: 20,
                     mainAxisSpacing: 20,
                     children: <Widget>[
@@ -127,6 +130,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           final currentHungerLevel = await dbRefHunger
                               .once()
                               .then((event) => event.snapshot.value as int?);
+                          //hunger
                           if (currentHungerLevel != null) {
                             if (currentHungerLevel == 10) {
                               //prevents overflow
@@ -134,7 +138,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                                   currentHungerLevel); //updates hunger level when clicked once.
                             } else {
                               await dbRefHunger.set(currentHungerLevel +
-                                  1); //updates hunger level when clicked once.ss
+                                  2); //updates hunger level when clicked once.ss
                             }
                           }
                         },
@@ -146,42 +150,36 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 1;
                           });
-                          final currentHungerLevel = await dbRefHunger
-                              .once()
-                              .then((event) => event.snapshot.value as int?);
-                          if (currentHungerLevel != null) {
-                            if (currentHungerLevel == 10) {
-                              //prevents overflow
-                              await dbRefHunger.set(
-                                  currentHungerLevel); //updates hunger level when clicked once.
-                            } else {
-                              await dbRefHunger.set(currentHungerLevel +
-                                  1); //updates hunger level when clicked once.ss
-                            }
+
+                          // Update hunger level
+                          try {
+                            await HungerLevelService.tryUpdateHungerLevel(1);
+                          } catch (e) {
+                            print('Error updating hunger level: $e');
+                          }
+
+                          // Update happiness level
+                          try {
+                            await HappinessLevelService.tryUpdateHappinessLevel(
+                                1);
+                          } catch (e) {
+                            print('Error updating happiness level: $e');
                           }
                         },
                       ),
                       CircularButton(
-                          imagePath: 'assets/icons/icecreamIcon.png',
-                          isSelected: selectedButtonIndex == 2,
-                          onPressed: () async {
-                            setState(() {
-                              selectedButtonIndex = 2;
-                            });
-                            final currentHappinessLevel = await dbRefHunger
-                                .once()
-                                .then((event) => event.snapshot.value as int?);
-                            if (currentHappinessLevel != null) {
-                              if (currentHappinessLevel == 10) {
-                                //prevents overflow
-                                await dbRefHunger.set(
-                                    currentHappinessLevel); //updates hunger level when clicked once.
-                              } else {
-                                await dbRefHappiness.set(currentHappinessLevel +
-                                    1); //updates hunger level when clicked once.ss
-                              }
-                            }
-                          }),
+                        imagePath: 'assets/icons/icecreamIcon.png',
+                        isSelected: selectedButtonIndex == 2,
+                        onPressed: () async {
+                          setState(() {
+                            selectedButtonIndex = 2;
+                          });
+                          await HungerLevelService.tryUpdateHungerLevel(
+                              1); // Increase hunger level by 2
+                          await HappinessLevelService.tryUpdateHappinessLevel(
+                              3); // Update happiness level
+                        },
+                      ),
                       CircularButton(
                         imagePath: 'assets/icons/breadIcon.png',
                         isSelected: selectedButtonIndex == 3,
@@ -189,6 +187,10 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 3;
                           });
+                          await HungerLevelService.tryUpdateHungerLevel(
+                              2); // Increase hunger level by 2
+                          await HappinessLevelService.tryUpdateHappinessLevel(
+                              1); // Update happiness level
                         },
                       ),
                     ],
@@ -210,6 +212,7 @@ class CircularButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   const CircularButton({
+    super.key,
     required this.isSelected,
     required this.onPressed,
     this.icon,
@@ -227,10 +230,11 @@ class CircularButton extends StatelessWidget {
             width: 100,
             height: 100,
             decoration: BoxDecoration(
-              color: isSelected ? Colors.white : Color(0xFF9CAAFA),
+              color: isSelected ? Colors.white : const Color(0xFF9CAAFA),
               shape: BoxShape.circle,
               border: Border.all(
-                color: isSelected ? Color(0xFF05FF00) : Colors.transparent,
+                color:
+                    isSelected ? const Color(0xFF05FF00) : Colors.transparent,
                 width: 4,
               ),
             ),
@@ -245,8 +249,8 @@ class CircularButton extends StatelessWidget {
                       icon,
                       size: 50,
                       color: isSelected
-                          ? Color(0xFF6354ED)
-                          : Color.fromARGB(255, 255, 255, 255),
+                          ? const Color(0xFF6354ED)
+                          : const Color.fromARGB(255, 255, 255, 255),
                     ),
             ),
           ),
