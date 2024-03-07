@@ -1,17 +1,17 @@
+import 'dart:async';
+import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
-import 'package:aerogotchi/components/levels/happiness_level_timer.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_timer.dart';
-import 'package:flutter/material.dart';
-import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
+import 'package:aerogotchi/components/levels/happiness_level_timer.dart';
+import 'package:aerogotchi/components/neglect_service.dart';
 import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:aerogotchi/screen/settingscreen.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'dart:async';
 
 class PetViewScreen extends StatefulWidget {
   final String petName;
@@ -24,9 +24,11 @@ class PetViewScreen extends StatefulWidget {
 class _PetViewScreenState extends State<PetViewScreen> {
   int hungerLevel = 0;
   int happinessLevel = 0;
+  late int neglectTimerSeconds;
 
   late HungerLevelTimer _hungerLevelTimer;
   late HappinessLevelTimer _happinessLevelTimer;
+  late Timer _neglectTimer;
 
   @override
   void initState() {
@@ -46,6 +48,19 @@ class _PetViewScreenState extends State<PetViewScreen> {
       _startHappinessTimer();
     }).catchError((error) {
       print('Error fetching happiness level: $error');
+    });
+
+    // Start the timer for decreasing happiness over time (neglect)
+    neglectTimerSeconds = NeglectService.decreaseIntervalSeconds;
+    _neglectTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        neglectTimerSeconds--;
+      });
+    });
+    NeglectService.startNeglectTimer((level) {
+      setState(() {
+        happinessLevel = level;
+      });
     });
   }
 
@@ -78,6 +93,8 @@ class _PetViewScreenState extends State<PetViewScreen> {
   void dispose() {
     _hungerLevelTimer.cancelTimer();
     _happinessLevelTimer.cancelTimer();
+    NeglectService.cancelNeglectTimer(); // Cancel the neglect timer
+    _neglectTimer.cancel();
     super.dispose();
   }
 
@@ -161,6 +178,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
                         buildPetImageBox(width: screenWidth * 0.80),
                         const SizedBox(height: 20),
                         buildBottomActionBox(width: screenWidth * 0.7),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -237,10 +255,33 @@ class _PetViewScreenState extends State<PetViewScreen> {
           SmallerlogoWidget("background_image/aerogotchi.png"),
           const SizedBox(height: 5),
           Text(
-            '${widget.petName} - Hunger Level: $hungerLevel     - Happiness Level: $happinessLevel', // Concatenate hunger level with pet name
+            '${widget.petName}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 26,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Hunger Level: $hungerLevel',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            'Happiness Level: $happinessLevel',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+          Text(
+            'Neglect Timer: $neglectTimerSeconds seconds',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
             ),
           ),
         ],
