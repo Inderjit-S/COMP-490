@@ -1,4 +1,5 @@
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
+import 'package:aerogotchi/components/levels/happiness_level_timer.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_timer.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
   int happinessLevel = 0;
 
   late HungerLevelTimer _hungerLevelTimer;
+  late HappinessLevelTimer _happinessLevelTimer;
 
   @override
   void initState() {
@@ -33,7 +35,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
       setState(() {
         hungerLevel = value;
       });
-      _startTimer();
+      _startHungerTimer();
     }).catchError((error) {
       print('Error fetching hunger level: $error');
     });
@@ -41,13 +43,13 @@ class _PetViewScreenState extends State<PetViewScreen> {
       setState(() {
         happinessLevel = value;
       });
-      _startTimer();
+      _startHappinessTimer();
     }).catchError((error) {
       print('Error fetching happiness level: $error');
     });
   }
 
-  void _startTimer() {
+  void _startHungerTimer() {
     _hungerLevelTimer = HungerLevelTimer(updateHungerLevel: (level) {
       setState(() {
         hungerLevel = level;
@@ -59,9 +61,23 @@ class _PetViewScreenState extends State<PetViewScreen> {
     _hungerLevelTimer.startTimer(hungerLevel);
   }
 
+  void _startHappinessTimer() {
+    _happinessLevelTimer = HappinessLevelTimer(updateHappinessLevel: (level) {
+      setState(() {
+        happinessLevel = level;
+      });
+      HappinessLevelService.updateHappinessLevel(happinessLevel)
+          .catchError((error) {
+        print('Error updating happiness level: $error');
+      });
+    });
+    _happinessLevelTimer.startTimer(happinessLevel);
+  }
+
   @override
   void dispose() {
     _hungerLevelTimer.cancelTimer();
+    _happinessLevelTimer.cancelTimer();
     super.dispose();
   }
 

@@ -7,9 +7,10 @@ class HungerLevelTimer {
   HungerLevelTimer({required this.updateHungerLevel});
 
   void startTimer(int initialHungerLevel) {
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) { // Decrease hunger level every 5 seconds
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      // Decrease hunger level every 5 seconds
       if (initialHungerLevel > 0) {
-        initialHungerLevel--; 
+        initialHungerLevel--;
         updateHungerLevel(initialHungerLevel);
       }
     });
