@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 
 class NeglectService {
-  static late Timer _timer;
+  static Timer? _timer;
   static const int decreaseAmount = 1; // Amount by which happiness decreases
   static const int decreaseIntervalSeconds =
       60; // Interval in seconds for decrease
@@ -29,6 +29,7 @@ class NeglectService {
   }
 
   static void cancelNeglectTimer() {
-    _timer.cancel();
+    _timer?.cancel();
+    _timer = null;
   }
 }

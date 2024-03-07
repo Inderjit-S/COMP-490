@@ -24,7 +24,7 @@ class PetViewScreen extends StatefulWidget {
 class _PetViewScreenState extends State<PetViewScreen> {
   int hungerLevel = 0;
   int happinessLevel = 0;
-  late int neglectTimerSeconds;
+  //late int neglectTimerSeconds;
 
   late HungerLevelTimer _hungerLevelTimer;
   late HappinessLevelTimer _happinessLevelTimer;
@@ -51,17 +51,17 @@ class _PetViewScreenState extends State<PetViewScreen> {
     });
 
     // Start the timer for decreasing happiness over time (neglect)
-    neglectTimerSeconds = NeglectService.decreaseIntervalSeconds;
-    _neglectTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        neglectTimerSeconds--;
-      });
-    });
-    NeglectService.startNeglectTimer((level) {
-      setState(() {
-        happinessLevel = level;
-      });
-    });
+    // neglectTimerSeconds = NeglectService.decreaseIntervalSeconds;
+    // _neglectTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+    //   setState(() {
+    //     neglectTimerSeconds--;
+    //   });
+    // });
+    // NeglectService.startNeglectTimer((level) {
+    //   setState(() {
+    //     happinessLevel = level;
+    //   });
+    // });
   }
 
   void _startHungerTimer() {
@@ -93,8 +93,8 @@ class _PetViewScreenState extends State<PetViewScreen> {
   void dispose() {
     _hungerLevelTimer.cancelTimer();
     _happinessLevelTimer.cancelTimer();
-    NeglectService.cancelNeglectTimer(); // Cancel the neglect timer
-    _neglectTimer.cancel();
+    // NeglectService.cancelNeglectTimer(); // Cancel the neglect timer
+    // _neglectTimer.cancel();
     super.dispose();
   }
 
@@ -277,13 +277,13 @@ class _PetViewScreenState extends State<PetViewScreen> {
               fontSize: 20,
             ),
           ),
-          Text(
-            'Neglect Timer: $neglectTimerSeconds seconds',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
+          // Text(
+          //   'Neglect Timer: $neglectTimerSeconds seconds',
+          //   style: TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 20,
+          //   ),
+          // ),
         ],
       ),
     );
