@@ -277,13 +277,14 @@ class _PetViewScreenState extends State<PetViewScreen> {
               fontSize: 20,
             ),
           ),
-          // Text(
-          //   'Neglect Timer: $neglectTimerSeconds seconds',
-          //   style: TextStyle(
-          //     color: Colors.white,
-          //     fontSize: 20,
-          //   ),
-          // ),
+          Text(
+            // 'Neglect Timer: $neglectTimerSeconds seconds',
+            'Neglect Timer: 0 seconds',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
         ],
       ),
     );
