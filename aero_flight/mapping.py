@@ -7,102 +7,63 @@ import math
 import sys
 
 # PARAMETERS
-fSpeed = 117 / 10  # Forward Speed in cm/s (11.7cm/s)
-aSpeed = 360 / 10  # Angular Speed Degrees/s (36°/s)
-interval = 0.25
-dInterval = fSpeed * interval
-aInterval = aSpeed * interval
+# Speed is now a constant value for drone commands that specify distance; adjustment for dynamic speed is not directly supported by the SDK commands.
+# Angular speed adjustments will be handled by rotation commands (cw, ccw) instead of a constant speed.
+interval = 0.25  # Reviewing the need for this interval since it contributes to the perceived delay.
 
 # Screen and Initial Box Dimensions
 screenWidth, screenHeight = 1000, 1000
-initialBoxSize = 200  # Initial size of the box, can be adjusted
+initialBoxSize = 200  # Static box size
 
 # Initialization
-x, y = 500, 500  # Drone's initial position
-a = 0
-yaw = 0
+x, y = 500, 500  # Drone's initial position on the screen, not using SDK's position data
+a = 0  # This angle is for visualization, not drone control
+yaw = 0  # For visualization
 kp.init()
 me = tello.Tello()
 me.connect()
 print(me.get_battery())
 
-# Function to handle keyboard input and adjust drone movement
+# Function to handle keyboard input and adjust drone movement using specific distance commands
 def getKeyboardInput():
     lr, fb, ud, yv = 0, 0, 0, 0
-    speed = 15
-    aspeed = 50
+    d = 20  # Minimum movement distance in cm
     global x, y, yaw, a
-    d = 0
 
-    # Movement keys
-    if kp.getKey("LEFT"):
-        lr = -speed
-        d = dInterval
-        a = -180
-    elif kp.getKey("RIGHT"):
-        lr = speed
-        d = -dInterval
-        a = 180
-
-    if kp.getKey("UP"):
-        fb = speed
-        d = dInterval
-        a = 270
-    elif kp.getKey("DOWN"):
-        fb = -speed
-        d = -dInterval
-        a = -90
-
-    if kp.getKey("w"):
-        ud = speed
-    elif kp.getKey("s"):
-        ud = -speed
-
-    if kp.getKey("a"):
-        yv = -aspeed
-        yaw -= aInterval
-    elif kp.getKey("d"):
-        yv = aspeed
-        yaw += aInterval
-
+    if kp.getKey("LEFT"): me.send_rc_control(0, 0, 0, -30); sleep(0.1); me.left(d)
+    if kp.getKey("RIGHT"): me.send_rc_control(0, 0, 0, 30); sleep(0.1); me.right(d)
+    if kp.getKey("UP"): me.send_rc_control(0, 30, 0, 0); sleep(0.1); me.forward(d)
+    if kp.getKey("DOWN"): me.send_rc_control(0, -30, 0, 0); sleep(0.1); me.back(d)
+    if kp.getKey("w"): me.up(d)
+    if kp.getKey("s"): me.down(d)
+    if kp.getKey("a"): me.ccw(45)  # Rotate counterclockwise
+    if kp.getKey("d"): me.cw(45)  # Rotate clockwise
     if kp.getKey("q"): me.land(); sleep(3)
     if kp.getKey("e"): me.takeoff()
     if kp.getKey("p"): sys.exit()
 
-    sleep(interval)
-    a += yaw
-
-    # Update drone position based on input
-    x += int(d * math.cos(math.radians(a)))
-    y += int(d * math.sin(math.radians(a)))
-
+    # Adjustments to visualization, not actual drone control
+    # Removed the movement calculations since we're now using distance commands directly
     return [lr, fb, ud, yv]
 
-# Function to draw the dynamic box based on drone's position
-def drawDynamicBox(img, x, y, screenWidth, screenHeight, initialBoxSize):
-    # Calculate proximity to edges
-    proximity = min(x, y, screenWidth - x, screenHeight - y)
-    
-    # Adjust box size based on proximity
-    boxSize = max(initialBoxSize, initialBoxSize + (200 - proximity) * 2)
-    boxSize = min(boxSize, screenWidth / 2, screenHeight / 2)  # Ensure box is not larger than screen
-    
-    # Calculate box coordinates
-    topLeft = (int(x - boxSize / 2), int(y - boxSize / 2))
-    bottomRight = (int(x + boxSize / 2), int(y + boxSize / 2))
-    
-    # Draw the box
-    cv2.rectangle(img, topLeft, bottomRight, (255, 0, 0), 2)  # Blue box with thickness of 2
+# Modified to draw a static box and represent the drone as a moving dot within it
+def drawStaticBoxAndDrone(img, x, y, screenWidth, screenHeight, initialBoxSize):
+    # Static box in the center of the screen
+    boxTopLeft = (int(screenWidth / 2 - initialBoxSize / 2), int(screenHeight / 2 - initialBoxSize / 2))
+    boxBottomRight = (int(screenWidth / 2 + initialBoxSize / 2), int(screenHeight / 2 + initialBoxSize / 2))
+    cv2.rectangle(img, boxTopLeft, boxBottomRight, (255, 0, 0), 2)  # Blue box with thickness of 2
+
+    # Represent the drone as a dot on the screen
+    cv2.circle(img, (x, y), 10, (0, 255, 0), -1)  # Green dot for the drone
 
 while True:
     vals = getKeyboardInput()
-    me.send_rc_control(vals[0], vals[1], vals[2], vals[3])
 
     # Initialize a black image
     img = np.zeros((screenHeight, screenWidth, 3), np.uint8)
 
-    # Draw the dynamic box based on the drone's current position
-    drawDynamicBox(img, x, y, screenWidth, screenHeight, initialBoxSize)
+    # Draw the static box and represent the drone's position as a dot
+    drawStaticBoxAndDrone(img, x, y, screenWidth, screenHeight, initialBoxSize)
 
     # Display the result
     cv2.imshow("Output", img)
@@ -110,4 +71,3 @@ while True:
         break
 
 cv2.destroyAllWindows()
-
