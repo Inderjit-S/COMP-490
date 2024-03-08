@@ -1,5 +1,7 @@
 import 'dart:async';
-import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
+import 'package:aerogotchi/components/petview/buildBottomActionBox.dart';
+import 'package:aerogotchi/components/petview/buildPetImageBox.dart';
+import 'package:aerogotchi/components/petview/buildActionTopBox.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
@@ -7,11 +9,8 @@ import 'package:aerogotchi/components/levels/hunger_level_timer.dart';
 import 'package:aerogotchi/components/levels/happiness_level_timer.dart';
 import 'package:aerogotchi/components/neglect_service.dart';
 import 'package:aerogotchi/screen/homescreen.dart';
-import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
-import 'package:aerogotchi/screen/statusmenuscreen.dart';
-import 'package:aerogotchi/screen/settingscreen.dart';
 
 class PetViewScreen extends StatefulWidget {
   final String petName;
@@ -24,7 +23,7 @@ class PetViewScreen extends StatefulWidget {
 class _PetViewScreenState extends State<PetViewScreen> {
   int hungerLevel = 0;
   int happinessLevel = 0;
-  //late int neglectTimerSeconds;
+  int neglectTimerSeconds = 0; // Variable to store the neglect timer value
 
   late HungerLevelTimer _hungerLevelTimer;
   late HappinessLevelTimer _happinessLevelTimer;
@@ -49,19 +48,14 @@ class _PetViewScreenState extends State<PetViewScreen> {
     }).catchError((error) {
       print('Error fetching happiness level: $error');
     });
-
-    // Start the timer for decreasing happiness over time (neglect)
-    // neglectTimerSeconds = NeglectService.decreaseIntervalSeconds;
-    // _neglectTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-    //   setState(() {
-    //     neglectTimerSeconds--;
-    //   });
-    // });
-    // NeglectService.startNeglectTimer((level) {
-    //   setState(() {
-    //     happinessLevel = level;
-    //   });
-    // });
+    NeglectService.startInactivityTimer();
+    //Neglect timer for display
+    _neglectTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        neglectTimerSeconds =
+            NeglectService.inactivityDuration.inSeconds - timer.tick;
+      });
+    });
   }
 
   void _startHungerTimer() {
@@ -93,14 +87,14 @@ class _PetViewScreenState extends State<PetViewScreen> {
   void dispose() {
     _hungerLevelTimer.cancelTimer();
     _happinessLevelTimer.cancelTimer();
-    // NeglectService.cancelNeglectTimer(); // Cancel the neglect timer
-    // _neglectTimer.cancel();
+    _neglectTimer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    NeglectService.onUserActivity();
 
     return Scaffold(
       appBar: PreferredSize(
@@ -173,11 +167,35 @@ class _PetViewScreenState extends State<PetViewScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        buildActionTopBox(width: screenWidth * 0.8),
+                        buildActionTopBox(
+                            context, screenWidth * 0.8, widget.petName),
                         const SizedBox(height: 20),
-                        buildPetImageBox(width: screenWidth * 0.80),
+                        buildPetImageBox(
+                          petName: widget.petName,
+                          hungerLevel: hungerLevel,
+                          happinessLevel: happinessLevel,
+                          neglectTimerSeconds: neglectTimerSeconds,
+                          width: screenWidth * 0.80,
+                        ),
                         const SizedBox(height: 20),
-                        buildBottomActionBox(width: screenWidth * 0.7),
+                        BottomActionBox(
+                          width: screenWidth * 0.7,
+                          onFoodMenuPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const FoodMenuScreen()),
+                            );
+                          },
+                          onPlayingMenuPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const PlayingMenuScreen()),
+                            );
+                          },
+                        ),
                         const SizedBox(height: 20),
                       ],
                     ),
@@ -186,139 +204,6 @@ class _PetViewScreenState extends State<PetViewScreen> {
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Container buildActionTopBox({required double width}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF1F426F),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: const Color(0xFF18235B),
-          width: 3.0,
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(vertical: 0),
-      width: width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          buildCircularButton(
-              'assets/icons/droneIcon.png', const Color(0xFF929EC4), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => DroneControlScreen(
-                        petName: widget.petName,
-                      )),
-            );
-          }, 90), // Change icon size here
-          buildCircularButton(
-              'assets/icons/statusIcon.png', const Color(0xFF00FF0A), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const StatusMenuScreen()),
-            );
-          }, 90), // Change icon size here
-          buildCircularButton(
-              'assets/icons/gearIcon.png', const Color(0xFF6354ED), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SettingScreen(petName: widget.petName)),
-            );
-          }, 90), // Change icon size here
-        ],
-      ),
-    );
-  }
-
-  Container buildPetImageBox({required double width}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF666D8C),
-        borderRadius: BorderRadius.circular(46),
-        border: Border.all(
-          color: Colors.black,
-          width: 2.0,
-        ),
-      ),
-      width: width,
-      height: 350,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SmallerlogoWidget("background_image/aerogotchi.png"),
-          const SizedBox(height: 5),
-          Text(
-            '${widget.petName}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 26,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            'Hunger Level: $hungerLevel',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            'Happiness Level: $happinessLevel',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-          Text(
-            // 'Neglect Timer: $neglectTimerSeconds seconds',
-            'Neglect Timer: 0 seconds',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Container buildBottomActionBox({required double width}) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF6354ED),
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: const Color(0xFF18235B),
-          width: 2.0,
-        ),
-      ),
-      width: width,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          buildCircularButton(
-              'assets/icons/bluehamIcon.png', const Color(0xFF5EBBFF), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const FoodMenuScreen()),
-            );
-          }, 100), // Change icon size here
-          buildCircularButton(
-              'assets/icons/gameIcon.png', const Color(0xFFF692B0), () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => const PlayingMenuScreen()),
-            );
-          }, 100), // Change icon size here
         ],
       ),
     );

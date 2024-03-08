@@ -2,34 +2,32 @@ import 'dart:async';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 
 class NeglectService {
-  static Timer? _timer;
-  static const int decreaseAmount = 1; // Amount by which happiness decreases
-  static const int decreaseIntervalSeconds =
-      60; // Interval in seconds for decrease
+  static const Duration inactivityDuration = Duration(seconds: 5);
+  static Timer? _activityTimer;
 
-  static void startNeglectTimer(Function(int) updateHappinessLevel) {
-    _timer =
-        Timer.periodic(Duration(seconds: decreaseIntervalSeconds), (timer) {
-      _decreaseHappiness(updateHappinessLevel);
+  static Duration getInactivityDuration() {
+    return inactivityDuration;
+  }
+
+  // Method to start the inactivity timer
+  // Inside NeglectService class
+
+  static void startInactivityTimer() {
+    _activityTimer?.cancel(); // Cancel existing timer if any
+    _activityTimer = Timer(inactivityDuration, () async {
+      // Decrease happiness level after specified duration of inactivity
+      await HappinessLevelService.decreaseHappinessLevel(1);
+      print('Happiness decreased due to neglect.');
     });
   }
 
-  static void _decreaseHappiness(Function(int) updateHappinessLevel) async {
-    try {
-      final currentHappinessLevel =
-          await HappinessLevelService.getHappinessLevel();
-      if (currentHappinessLevel != null && currentHappinessLevel > 0) {
-        final newHappinessLevel = currentHappinessLevel - decreaseAmount;
-        await HappinessLevelService.updateHappinessLevel(newHappinessLevel);
-        updateHappinessLevel(newHappinessLevel);
-      }
-    } catch (e) {
-      print('Error decreasing happiness level: $e');
-    }
+  // Method to reset the inactivity timer on user activity
+  static void resetInactivityTimer() {
+    startInactivityTimer();
   }
 
-  static void cancelNeglectTimer() {
-    _timer?.cancel();
-    _timer = null;
+  // Method to be called on user activity
+  static void onUserActivity() {
+    resetInactivityTimer();
   }
 }
