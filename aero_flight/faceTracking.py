@@ -9,13 +9,13 @@ print(tello.get_battery())
 
 tello.streamon()
 tello.takeoff()
-#time.sleep(1)
-tello.send_rc_control(0,0,10,0)
-time.sleep(0.2)
+#time.sleep(5)
+tello.send_rc_control(0,0,20,0)
+time.sleep(3.5)
 
 w, h = 360, 240
 fbRange = [6200, 6800]
-pid = [0.4, 0.4, 0] # play around with these values for smoothness
+pid = [0.3, 0.4, 0] # play around with these values for smoothness
 pError = 0
 
 # def adjustTello(offset_x,offset_y,offset_z):
@@ -71,7 +71,7 @@ def findFace(img):
         return img, [[0,0],0]
 
 
-def tracking(info, w, pid, pError):
+def tracking(info, w, h, pid, pError):
     area = info[1]
     x,y = info[0]
     fb = 0
@@ -98,11 +98,13 @@ def tracking(info, w, pid, pError):
         speed = 0
         #speed_ud = 0
         error = 0
+    if y == 0:
+        speed_ud = 0
 
     #print(speed, fb)
 
     #tello.send_rc_control(0, fb, 0, speed)
-    tello.send_rc_control(0, fb, speed_ud, speed)
+    tello.send_rc_control(0, fb, -speed_ud, speed)
     return error
     #return error, error_ud
 
@@ -113,7 +115,7 @@ while True:
     img = tello.get_frame_read().frame
     img = cv2.resize(img, (w,h))
     img, info = findFace(img)
-    pError = tracking(info, w, pid, pError)
+    pError = tracking(info, w, h, pid, pError)
     #print("Center", info[0], "Area", info[1])
     cv2.imshow("Output", img)
     if cv2.waitKey(1) & 0xFF == ord('q'):
