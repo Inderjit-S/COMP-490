@@ -1,5 +1,5 @@
 import 'package:aerogotchi/components/levels/level_service.dart';
-import 'package:aerogotchi/components/status/custom_status_bar.dart';
+import 'package:aerogotchi/reusable_widget/custom_status_bar.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
