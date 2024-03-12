@@ -1,5 +1,9 @@
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
+import 'package:aerogotchi/components/levels/level_service.dart';
+import 'package:aerogotchi/reusable_widget/background_gradient.dart';
+import 'package:aerogotchi/reusable_widget/custom_foodmenu_circular_button.dart';
+import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
@@ -35,59 +39,32 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
   {
     dbRefHunger.set(Hunger_lvl);
   }*/
+  @override
+  void initState() {
+    super.initState();
+    // Fetch initial levels
+    LevelFetchService.fetchHungerLevel((value) {
+      setState(() {
+        // Handle the fetched hunger level here
+      });
+    });
+    LevelFetchService.fetchHappinessLevel((value) {
+      setState(() {
+        // Handle the fetched happiness level here
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(130.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          flexibleSpace: Container(
-            padding: const EdgeInsets.only(top: 80.0),
-            child: const Center(
-              child: Text(
-                'FOOD MENU',
-                style: TextStyle(
-                  fontSize: 40.0,
-                  color: Color(0xFFAC90FF),
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Color(0xFF4660E8),
-                      offset: Offset(0, 8),
-                      blurRadius: 6,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pop(context);
-              // Implement back button functionality
-            },
-            color: const Color.fromARGB(68, 0, 0, 0).withOpacity(0.4),
-          ),
-        ),
-      ),
+      appBar:
+          CustomAppBar(titleText: 'FOOD MENU', fontSize: 40, topPadding: 80),
       extendBodyBehindAppBar: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.blue[800]!,
-              Colors.blue[400]!,
-            ],
-          ),
-        ),
+        decoration: BackgroundGradient.blueGradient,
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(
@@ -160,8 +137,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
 
                           // Update happiness level
                           try {
-                            await HappinessLevelService.tryUpdateHappinessLevel(
-                                1);
+                            await HappinessLevelService.tryUpdateHappinessLevel(1);
                           } catch (e) {
                             print('Error updating happiness level: $e');
                           }
@@ -205,57 +181,4 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
   }
 }
 
-class CircularButton extends StatelessWidget {
-  final IconData? icon;
-  final String? imagePath;
-  final bool isSelected;
-  final VoidCallback onPressed;
 
-  const CircularButton({
-    super.key,
-    required this.isSelected,
-    required this.onPressed,
-    this.icon,
-    this.imagePath,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipOval(
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: onPressed,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              color: isSelected ? Colors.white : const Color(0xFF9CAAFA),
-              shape: BoxShape.circle,
-              border: Border.all(
-                color:
-                    isSelected ? const Color(0xFF05FF00) : Colors.transparent,
-                width: 4,
-              ),
-            ),
-            child: Center(
-              child: imagePath != null
-                  ? Image.asset(
-                      imagePath!,
-                      width: 118, // Adjusted width
-                      height: 118, // Adjusted height
-                    )
-                  : Icon(
-                      icon,
-                      size: 50,
-                      color: isSelected
-                          ? const Color(0xFF6354ED)
-                          : const Color.fromARGB(255, 255, 255, 255),
-                    ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}

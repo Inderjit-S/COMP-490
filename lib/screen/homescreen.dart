@@ -1,3 +1,5 @@
+import 'package:aerogotchi/reusable_widget/background_gradient.dart';
+import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:aerogotchi/screen/loginscreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,12 +19,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          child: Text("Logout"),
-          onPressed: () {
-            _showLogoutConfirmationDialog(context, widget.petName); // Pass petName to the dialog
-          },
+      appBar: CustomAppBar(titleText: 'SIGN OUT',),
+      extendBodyBehindAppBar: true, // Extend body behind app bar
+
+      body: Container(
+         decoration: BackgroundGradient.blueGradient,
+        child: Center(
+         
+          child: ElevatedButton(
+            child: Text("Sign Out"),
+            onPressed: () {
+              _showLogoutConfirmationDialog(context, widget.petName); // Pass petName to the dialog
+            },
+          ),
         ),
       ),
     );

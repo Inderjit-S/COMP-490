@@ -1,13 +1,16 @@
 import 'dart:async';
+import 'package:aerogotchi/components/navigation_helper.dart';
 import 'package:aerogotchi/components/petview/buildBottomActionBox.dart';
 import 'package:aerogotchi/components/petview/buildPetImageBox.dart';
 import 'package:aerogotchi/components/petview/buildActionTopBox.dart';
+import 'package:aerogotchi/reusable_widget/background_gradient.dart';
+import 'package:aerogotchi/reusable_widget/custom_petview_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
-import 'package:aerogotchi/components/levels/hunger_level_timer.dart';
-import 'package:aerogotchi/components/levels/happiness_level_timer.dart';
-import 'package:aerogotchi/components/neglect_service.dart';
+import 'package:aerogotchi/components/timers/hunger_level_timer.dart';
+import 'package:aerogotchi/components/timers/happiness_level_timer.dart';
+import 'package:aerogotchi/components/timers/neglect_service_timer.dart';
 import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
@@ -97,47 +100,9 @@ class _PetViewScreenState extends State<PetViewScreen> {
     NeglectService.onUserActivity();
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(120.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          flexibleSpace: Container(
-            padding: const EdgeInsets.only(top: 100.0),
-            child: const Center(
-              child: Text(
-                'PETVIEW',
-                style: TextStyle(
-                  color: Color(0xFFAC90FF),
-                  fontSize: 35.0,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Color(0xFF4660E8),
-                      offset: Offset(0, 8),
-                      blurRadius: 6,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          centerTitle: true,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.logout_sharp),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomeScreen(
-                            petName: widget.petName,
-                          )),
-                );
-              },
-            ),
-          ],
-        ),
+      appBar: CustomPetViewAppBar(
+        titleText: 'PETVIEW',
+        petName: '',
       ),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -145,16 +110,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
           Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Colors.blue[800]!,
-                  Colors.blue[400]!,
-                ],
-              ),
-            ),
+            decoration: BackgroundGradient.blueGradient,
           ),
           Positioned.fill(
             top: MediaQuery.of(context).padding.top + 80,
@@ -181,19 +137,10 @@ class _PetViewScreenState extends State<PetViewScreen> {
                         BottomActionBox(
                           width: screenWidth * 0.7,
                           onFoodMenuPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const FoodMenuScreen()),
-                            );
+                          navigateToFoodMenuScreen(context);
                           },
                           onPlayingMenuPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const PlayingMenuScreen()),
-                            );
+                           navigateToPlayingMenuScreen(context);
                           },
                         ),
                         const SizedBox(height: 20),

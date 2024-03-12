@@ -1,8 +1,8 @@
-import 'package:aerogotchi/screen/petnamescreen.dart';
-import 'package:aerogotchi/screen/petviewscreen.dart';
+import 'package:aerogotchi/components/navigation_helper.dart';
+import 'package:aerogotchi/reusable_widget/background_gradient.dart';
+import 'package:aerogotchi/reusable_widget/custom_settings_button.dart';
 import 'package:flutter/material.dart';
 import '../reusable_widget/reusable_widget.dart';
-import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class SettingScreen extends StatefulWidget {
   final String petName;
@@ -13,48 +13,51 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingsState extends State<SettingScreen> {
-  TextEditingController restartController = TextEditingController();
-  TextEditingController backController = TextEditingController();
+  late TextEditingController restartController;
+  late TextEditingController backController;
+
+  @override
+  void initState() {
+    super.initState();
+    restartController = TextEditingController();
+    backController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    restartController.dispose();
+    backController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
 
     // Adjust these variables for container width and height
-    double containerWidth = screenWidth * 0.6;
-    double containerHeight = screenHeight * 0.2;
+    final double containerWidth = screenWidth * 0.6;
+    final double containerHeight = screenHeight * 0.2;
 
     return Scaffold(
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.blue[800]!,
-              Colors.blue[400]!,
-            ],
-          ),
-        ),
+        decoration: BackgroundGradient.blueGradient,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              logoWidget(
-                  "background_image/aerogotchi.png"), //image file path for logo
+              logoWidget("background_image/aerogotchi.png"),
               Text(
                 'SETTINGS',
                 style: TextStyle(
                   fontSize: 28.0,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF6354ED), // Set font color
+                  color: Color(0xFF6354ED),
                 ),
               ),
               SizedBox(height: 20),
-              // Adjust width and height of the container
               Container(
                 width: containerWidth,
                 height: containerHeight,
@@ -63,7 +66,7 @@ class _SettingsState extends State<SettingScreen> {
                   color: Color(0xFF6354ED),
                   borderRadius: BorderRadius.circular(35),
                   border: Border.all(
-                    color: Color(0xFF1C205E), // Stroke color for the container
+                    color: Color(0xFF1C205E),
                     width: 3,
                   ),
                 ),
@@ -71,55 +74,13 @@ class _SettingsState extends State<SettingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PetNameScreen(petName: widget.petName)),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF2D7ADE),
-                        onPrimary: Color(0xFFA990FF),
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35),
-                          side: BorderSide(
-                            color: Color(0xFF1C205E),
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        'Restart',
-                        style: TextStyle(fontSize: 18),
-                      ),
+                    CustomSettingsButton(
+                      text: 'Restart',
+                       onPressed: () => navigateToPetNameScreen(context, widget.petName),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PetViewScreen(petName: widget.petName)),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xFF92B1F6),
-                        onPrimary: Color.fromARGB(255, 123, 91, 229),
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35),
-                          side: BorderSide(
-                            color: Color(0xFF1C205E),
-                            width: 3,
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        'Back',
-                        style: TextStyle(fontSize: 18),
-                      ),
+                    CustomSettingsButton(
+                      text: 'Back',
+                      onPressed: () => navigateToPetViewScreen(context, widget.petName),
                     ),
                   ],
                 ),
@@ -130,4 +91,6 @@ class _SettingsState extends State<SettingScreen> {
       ),
     );
   }
+
+
 }

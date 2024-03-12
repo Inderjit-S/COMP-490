@@ -1,3 +1,6 @@
+import 'package:aerogotchi/components/navigation_helper.dart';
+import 'package:aerogotchi/reusable_widget/background_gradient.dart';
+import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:flutter/material.dart';
 import '../reusable_widget/reusable_widget.dart';
@@ -24,7 +27,8 @@ class _PetNameScreen extends State<PetNameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String petName = widget.petName ?? ''; //return widget.petName if not null and '' if null
+    String petName =
+        widget.petName ?? ''; //return widget.petName if not null and '' if null
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -33,24 +37,12 @@ class _PetNameScreen extends State<PetNameScreen> {
     double containerHeight = screenHeight * 0.2;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor:
-            Colors.blue[700], // Set app bar background to transparent
-        elevation: 0,
-      ),
+      appBar: CustomAppBar(titleText: ' ',),
+      extendBodyBehindAppBar: true, // Extend body behind app bar
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.blue[800]!,
-              Colors.blue[400]!,
-            ],
-          ),
-        ),
+        decoration: BackgroundGradient.blueGradient,
         child: Center(
           child: Transform.scale(
             scale: 1.0,
@@ -104,11 +96,7 @@ class _PetNameScreen extends State<PetNameScreen> {
                           if (petName.isNotEmpty) {
                             savePetName(
                                 petName); // Save the pet name to the database
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => PetViewScreen(petName: petName)),
-                            );
+                            navigateToPetViewScreen(context, petName);
                           } else {
                             // Show error message if pet name is empty
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -118,8 +106,8 @@ class _PetNameScreen extends State<PetNameScreen> {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF92B1F6),
-                          onPrimary: Color.fromARGB(255, 123, 91, 229),
+                        //  primary: Color(0xFF92B1F6),
+                          //onPrimary: Color.fromARGB(255, 123, 91, 229),
                           padding: EdgeInsets.symmetric(vertical: 10),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(35),

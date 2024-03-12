@@ -1,4 +1,6 @@
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
+import 'package:aerogotchi/reusable_widget/background_gradient.dart';
+import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -32,60 +34,12 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize:
-            const Size.fromHeight(130.0), // Increased height of app bar
-        child: AppBar(
-          backgroundColor:
-              Colors.transparent, // Set app bar background to transparent
-          elevation: 0, // Remove app bar elevation
-          flexibleSpace: Container(
-            padding: const EdgeInsets.only(top: 75.0), // Adjust top padding
-            child: const Center(
-              child: Text(
-                'PLAYING MENU',
-                style: TextStyle(
-                  color: Color(0xFFAC90FF),
-                  fontSize: 32.0, // Increased font size
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      color: Color(0xFF4660E8),
-                      offset: Offset(
-                          0, 8), // Adjust the offset to create a lifting effect
-                      blurRadius:
-                          6, // Increase blur radius for a more prominent shadow
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              // Navigate back to the previous screen
-              Navigator.pop(context);
-            },
-            color: const Color.fromARGB(68, 0, 0, 0)
-                .withOpacity(0.3), // Lower opacity of back button
-          ),
-        ),
-      ),
+      appBar: CustomAppBar(titleText: 'PLAYING MENU',),
       extendBodyBehindAppBar: true, // Extend body behind app bar
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.blue[800]!,
-              Colors.blue[400]!,
-            ],
-          ),
-        ),
+        decoration: BackgroundGradient.blueGradient,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[

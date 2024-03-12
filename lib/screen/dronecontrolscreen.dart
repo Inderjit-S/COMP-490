@@ -1,3 +1,4 @@
+import 'package:aerogotchi/components/navigation_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/screen/temphomescreen.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
@@ -31,10 +32,7 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
         color: Colors.black,
         child: LandscapeDroneControlMenu(
           onHomePressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => TempScreen(petName: widget.petName,)),
-            );
+            navigateToPetViewScreen(context, widget.petName);
           },
         ),
       ),
