@@ -18,20 +18,14 @@ print(data)  # Print the retrieved data
 
 # Update Energy Level Method 1
 while True:
-    db.reference("/").update({tello.get_battery})
+    db.reference("/").update({"energy_level" : tello.get_battery()})
     data = ref.get()
     print(data)
-    sleep(5) # update firebase database every 5 seconds. Increase later
-
-# # Update Energy Level Method 2
-# while True:
-#     battery = tello.get_battery
-#     ref.update({'battery': battery})
-#     sleep(5) # update firebase database every 5 seconds. Increase later
+    sleep(5) # Change to however long we want it to update
 
 
 # Manual update for energy level
-# db.reference("/").update({"energy_level": 5})
+# db.reference("/").update({"energy_level": 3})
 # data = ref.get()
 
 # print(data)  # Print the retrieved data
