@@ -1,21 +1,12 @@
-import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:aerogotchi/screen/idlescreen.dart';
-import 'package:aerogotchi/screen/loginscreen.dart';
-import 'package:aerogotchi/screen/petnamescreen.dart';
-import 'package:aerogotchi/screen/petviewscreen.dart';
-import 'package:aerogotchi/screen/playingmenuscreen.dart';
-import 'package:aerogotchi/screen/foodmenuscreen.dart';
-import 'package:aerogotchi/screen/settingscreen.dart';
-import 'package:aerogotchi/screen/temphomescreen.dart';
-import 'package:aerogotchi/screen/statusmenuscreen.dart';
-import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
+import 'package:aerogotchi/components/notification_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseNotificationHandler().initNotifications();
   runApp(const MyApp());
 }
 
