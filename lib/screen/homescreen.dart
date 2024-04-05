@@ -5,7 +5,7 @@ import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
+import 'package:firebase_database/firebase_database.dart';
 
 class HomeScreen extends StatefulWidget {
   final String petName;
@@ -19,17 +19,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(titleText: 'SIGN OUT',),
+      appBar: CustomAppBar(
+        titleText: 'SIGN OUT',
+      ),
       extendBodyBehindAppBar: true, // Extend body behind app bar
 
       body: Container(
-         decoration: BackgroundGradient.blueGradient,
+        decoration: BackgroundGradient.blueGradient,
         child: Center(
-         
           child: ElevatedButton(
             child: Text("Sign Out"),
             onPressed: () {
-              _showLogoutConfirmationDialog(context, widget.petName); // Pass petName to the dialog
+              _showLogoutConfirmationDialog(
+                  context, widget.petName); // Pass petName to the dialog
             },
           ),
         ),
@@ -54,7 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             TextButton(
               onPressed: () {
-                _logoutAndNavigateToLogin(context, petName); // Pass petName to the logout function
+                _logoutAndNavigateToLogin(
+                    context, petName); // Pass petName to the logout function
               },
               child: Text("Logout"),
             ),
@@ -75,7 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
       // Pass petName to the PetViewScreen
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => PetViewScreen(petName: petName)),
+        MaterialPageRoute(
+            builder: (context) => PetViewScreen(petName: petName)),
       );
     });
   }

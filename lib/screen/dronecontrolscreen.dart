@@ -1,16 +1,44 @@
-import 'package:aerogotchi/components/navigation_helper.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
+import 'package:flutter/services.dart';
+import 'package:aerogotchi/components/drone/custom_joystick.dart';
+import 'package:aerogotchi/components/navigation_helper.dart';
 import 'package:aerogotchi/screen/temphomescreen.dart';
-import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
 
 class DroneControlScreen extends StatefulWidget {
   final String petName;
+
   const DroneControlScreen({Key? key, required this.petName}) : super(key: key);
+
   @override
   _DroneControlScreenState createState() => _DroneControlScreenState();
 }
 
 class _DroneControlScreenState extends State<DroneControlScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Lock the orientation to landscape mode
+    // SystemChrome.setPreferredOrientations([
+    //   DeviceOrientation.landscapeLeft,
+    //   DeviceOrientation.landscapeRight,
+    // ]);
+  }
+
+  @override
+  void dispose() {
+    // Reset preferred orientation when disposing the screen
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
+  }
+
+  void callback(x, y) {
+    log('callback x => $x and y $y');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,10 +58,26 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
       ),
       body: Container(
         color: Colors.black,
-        child: LandscapeDroneControlMenu(
-          onHomePressed: () {
-            navigateToPetViewScreen(context, widget.petName);
-          },
+        child: Stack(
+          children: [
+            LandscapeDroneControlMenu(
+              petName: widget.petName,
+              callback: callback,
+              onHomePressed: () {
+                navigateToPetViewScreen(context, widget.petName);
+              },
+              onCameraPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Center(
+                      child: Text('Image Captured!'),
+                    ),
+                    backgroundColor: Colors.transparent,
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -41,9 +85,17 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
 }
 
 class LandscapeDroneControlMenu extends StatelessWidget {
+  final String petName;
+  final Function callback;
   final Function onHomePressed;
+  final Function onCameraPressed;
 
-  LandscapeDroneControlMenu({required this.onHomePressed});
+  LandscapeDroneControlMenu({
+    required this.petName,
+    required this.callback,
+    required this.onHomePressed,
+    required this.onCameraPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -52,37 +104,19 @@ class LandscapeDroneControlMenu extends StatelessWidget {
         Positioned(
           left: 20,
           bottom: 20,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white),
-            ),
-            child: Center(
-              child: Text(
-                'Joystick 1',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+          child: CustomJoystick(
+            radius: 50.0,
+            stickRadius: 10,
+            callback: callback,
           ),
         ),
         Positioned(
           right: 20,
           bottom: 20,
-          child: Container(
-            width: 100,
-            height: 100,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.white),
-            ),
-            child: Center(
-              child: Text(
-                'Joystick 2',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
+          child: CustomJoystick(
+            radius: 50.0,
+            stickRadius: 10,
+            callback: callback,
           ),
         ),
         Align(
@@ -102,18 +136,10 @@ class LandscapeDroneControlMenu extends StatelessWidget {
                     child: Icon(Icons.home, color: Colors.white),
                   ),
                 ),
-                SizedBox(width: 20),
+                SizedBox(width: 7),
                 IconButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Center(
-                          // Center the text
-                          child: Text('Image Captured!'),
-                        ),
-                        backgroundColor: Colors.transparent, // Clear background
-                      ),
-                    );
+                    onCameraPressed();
                   },
                   icon: CircleAvatar(
                     radius: 30,
