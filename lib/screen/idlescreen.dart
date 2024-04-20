@@ -40,7 +40,7 @@ class _IdleScreenState extends State<IdleScreen> {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => LoginScreen()));
+            context, MaterialPageRoute(builder: (context) => LoginScreen())); //When Idlescreen is tapped, re-routes to LoginScreen.
       },
       child: Container(
         width: double.infinity,
@@ -64,7 +64,7 @@ class _IdleScreenState extends State<IdleScreen> {
               child: Center(
                 child: Transform.scale(
                   scale: 1.9, // Adjust as needed
-                  child: logoWidget("background_image/aerogotchi.png"),
+                  child: logoWidget("background_image/aerogotchi.png"), //background url for image
                 ),
               ),
             ),
@@ -75,7 +75,7 @@ class _IdleScreenState extends State<IdleScreen> {
               right: 0,
               child: Center(
                 child: Visibility(
-                  visible: isTextVisible,
+                  visible: isTextVisible, //toggle condition for timer
                   child: Text(
                     "Tap to continue",
                     style: TextStyle(

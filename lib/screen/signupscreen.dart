@@ -19,7 +19,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar(
+        appBar: AppBar( //Creates the app bar with text Sign Up
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
@@ -45,17 +45,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    reusableTextField("Enter Email", Icons.person_outline,
+                    reusableTextField("Enter Email", Icons.person_outline, //Text field to enter email
                         false, _emailTextController),
                     const SizedBox(
                       height: 20,
                     ),
-                    reusableTextField("Enter Password", Icons.lock_outline,
+                    reusableTextField("Enter Password", Icons.lock_outline, //Text field to enter password
                         true, _passwordTextController),
                     const SizedBox(
                       height: 20,
                     ),
-                    signInButton((context), false, () {
+                    signInButton((context), false, () { //sends data to database for username and password
                       FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                         email: _emailTextController.text,
