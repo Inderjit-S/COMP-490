@@ -49,7 +49,7 @@ class _PetNameScreen extends State<PetNameScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SmallerlogoWidget("background_image/aerogotchi.png"),
+                SmallerlogoWidget("background_image/aerogotchi.png"), //image url
                 Text(
                   'NAME MENU',
                   style: TextStyle(
@@ -84,14 +84,14 @@ class _PetNameScreen extends State<PetNameScreen> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      reusableTextField(
+                      reusableTextField( //Field to enter data
                         "e.g. Sparky, AeroBot, SkyDancer",
                         Icons.pets_outlined,
                         false,
                         characterNameController,
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () { //Validate petname is not empty when pressed and navigate to PetviewScreen upon success
                           String petName = characterNameController.text;
                           if (petName.isNotEmpty) {
                             savePetName(
