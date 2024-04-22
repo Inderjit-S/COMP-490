@@ -5,7 +5,7 @@ import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_foodmenu_circular_button.dart';
 import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
+import 'package:firebase_database/firebase_database.dart'; 
 
 class FoodMenuScreen extends StatefulWidget {
   const FoodMenuScreen({super.key});
@@ -25,32 +25,18 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
   final dbRefHunger =
       FirebaseDatabase.instance.reference().child('hunger_level');
 
-  /*void saveEnergyLevel(int Energy_lvl)
-  {
-    dbRefEnergy.set(Energy_lvl);
-  }
-
-  void saveHappinessLevel(int Happiness_lvl)
-  {
-    dbRefHappiness.set(Happiness_lvl);
-  }
-
-  void saveHungerLevel(int Hunger_lvl)
-  {
-    dbRefHunger.set(Hunger_lvl);
-  }*/
   @override
   void initState() {
     super.initState();
     // Fetch initial levels
     LevelFetchService.fetchHungerLevel((value) {
       setState(() {
-        // Handle the fetched hunger level here
+        
       });
     });
     LevelFetchService.fetchHappinessLevel((value) {
       setState(() {
-        // Handle the fetched happiness level here
+        
       });
     });
   }
@@ -68,7 +54,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(
-                20.0, 0, 20.0, 20.0), // Adjusted padding
+                20.0, 0, 20.0, 20.0), 
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -112,10 +98,10 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                             if (currentHungerLevel == 10) {
                               //prevents overflow
                               await dbRefHunger.set(
-                                  currentHungerLevel); //updates hunger level when clicked once.
+                                  currentHungerLevel); //updates hunger level when clicked once
                             } else {
                               await dbRefHunger.set(currentHungerLevel +
-                                  2); //updates hunger level when clicked once.ss
+                                  2); //updates hunger level when clicked once
                             }
                           }
                         },
@@ -151,7 +137,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                             selectedButtonIndex = 2;
                           });
                           await HungerLevelService.tryUpdateHungerLevel(
-                              1); // Increase hunger level by 2
+                              1); // Increase hunger level 
                           await HappinessLevelService.tryUpdateHappinessLevel(
                               3); // Update happiness level
                         },
@@ -164,7 +150,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                             selectedButtonIndex = 3;
                           });
                           await HungerLevelService.tryUpdateHungerLevel(
-                              2); // Increase hunger level by 2
+                              2); // Increase hunger level 
                           await HappinessLevelService.tryUpdateHappinessLevel(
                               1); // Update happiness level
                         },

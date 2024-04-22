@@ -11,9 +11,7 @@ import 'package:aerogotchi/components/levels/hunger_level_service.dart';
 import 'package:aerogotchi/components/timers/hunger_level_timer.dart';
 import 'package:aerogotchi/components/timers/happiness_level_timer.dart';
 import 'package:aerogotchi/components/timers/neglect_service_timer.dart';
-import 'package:aerogotchi/screen/homescreen.dart';
-import 'package:aerogotchi/screen/foodmenuscreen.dart';
-import 'package:aerogotchi/screen/playingmenuscreen.dart';
+
 
 class PetViewScreen extends StatefulWidget {
   final String petName;

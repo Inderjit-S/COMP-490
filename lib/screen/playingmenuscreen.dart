@@ -1,18 +1,19 @@
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
+import 'package:aerogotchi/components/playingmenu/my_list_file.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class PlayingMenuScreen extends StatefulWidget {
-  const PlayingMenuScreen({super.key});
+  const PlayingMenuScreen({Key? key}) : super(key: key);
 
   @override
   _PlayingMenuScreenState createState() => _PlayingMenuScreenState();
 }
 
 class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
-  int selectedOptionIndex = -1; // Initialize with no selected option
+  int selectedOptionIndex = -1;
   final DatabaseReference dbRefHappiness =
       FirebaseDatabase.instance.reference().child('happiness_level');
 
@@ -21,7 +22,8 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => getTempScreen(selectedOptionIndex)),
+        builder: (context) => getTempScreen(selectedOptionIndex),
+      ),
     );
 
     // Update happiness level
@@ -30,12 +32,10 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen height
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: CustomAppBar(titleText: 'PLAYING MENU',),
-      extendBodyBehindAppBar: true, // Extend body behind app bar
+      appBar: CustomAppBar(titleText: 'PLAYING MENU'),
+      extendBodyBehindAppBar: true,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -43,58 +43,50 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(
-              height: 25, // Adjust the space between app bar and menu options
-            ),
+            const SizedBox(height: 25),
             Expanded(
               child: ListView(
-                itemExtent: 95.0, // Fixed height for each menu option
+                itemExtent: 95.0,
                 children: <Widget>[
-                  buildListTile(0, 'Sky-Shuffle', 'Dance'),
-                  buildListTile(1, 'Follow the Leader', 'Following Game'),
-                  buildListTile(2, 'Photo Pilot', 'Photoshoot'),
+                  myListTile(0, 'Sky-Shuffle', 'Dance', selectedOptionIndex, handleTileTap),
+                  myListTile(1, 'Follow the Leader', 'Following Game', selectedOptionIndex, handleTileTap),
+                  myListTile(2, 'Photo Pilot', 'Photoshoot', selectedOptionIndex, handleTileTap),
                 ],
               ),
             ),
-            // Show description if an option is selected
-            if (selectedOptionIndex != -1)
+            if (selectedOptionIndex != -1) ...[
               Padding(
-                padding: const EdgeInsets.fromLTRB(
-                    20.0, 0, 20.0, 20.0), // Adjust bottom inset
+                padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 20.0),
                 child: Container(
                   child: Text(
                     getDescription(selectedOptionIndex),
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.7),
-                      fontSize: 18.0, // Increased font size for description
+                      fontSize: 18.0,
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
-            // Show Go button if an option is selected
-            if (selectedOptionIndex != -1)
               Padding(
                 padding: const EdgeInsets.only(
                     bottom: 16.0, left: 16.0, right: 16.0),
                 child: SizedBox(
                   width: double.infinity,
                   child: TextButton(
-                    onPressed: () => navigateToTempScreenAndUpdateHappiness(
-                        selectedOptionIndex),
+                    onPressed: () =>
+                        navigateToTempScreenAndUpdateHappiness(selectedOptionIndex),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.symmetric(
-                            vertical: 40,
-                            horizontal: 40), // Adjust inset padding
+                        const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
                       ),
-                      backgroundColor:
-                          MaterialStateProperty.all<Color>(Colors.transparent),
-                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Colors.transparent),
+                      foregroundColor:
+                          MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors
-                                .white; // Change color to white when hovered
+                            return Colors.white; // Change color to white when hovered
                           }
                           return Colors.white.withOpacity(0.2); // Default color
                         },
@@ -102,7 +94,7 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
                       side: MaterialStateProperty.all<BorderSide>(
                           BorderSide(color: Colors.white.withOpacity(0.05))),
                       shape: MaterialStateProperty.all<OutlinedBorder>(
-                        const RoundedRectangleBorder(
+                        RoundedRectangleBorder(
                           borderRadius: BorderRadius.horizontal(),
                         ),
                       ),
@@ -118,69 +110,19 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
                   ),
                 ),
               ),
+            ],
           ],
         ),
       ),
     );
   }
 
-  // Widget to build each menu option
-  Widget buildListTile(int index, String title, String description) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          title: Center(
-            child: Text(
-              title,
-              style: TextStyle(
-                color: selectedOptionIndex == index
-                    ? Colors.white
-                    : Colors.white.withOpacity(0.5),
-                fontWeight: selectedOptionIndex == index
-                    ? FontWeight.bold
-                    : FontWeight.normal,
-                fontSize: 22.0, // Increased font size for options
-                shadows: selectedOptionIndex == index
-                    ? [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          spreadRadius: 2,
-                          blurRadius: 4,
-                          offset: const Offset(0, 2),
-                        ),
-                      ]
-                    : [], // Apply shadow if selected
-              ),
-            ),
-          ),
-          onTap: () {
-            setState(() {
-              selectedOptionIndex = index;
-            });
-          },
-        ),
-        const SizedBox(
-            height: 0.5), // Adjust the space between title and description
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Text(
-              description,
-              style: TextStyle(
-                color:
-                    const Color.fromRGBO(255, 255, 255, 0.525).withOpacity(0.6),
-                fontSize: 13.0, // Font size for description
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ],
-    );
+  void handleTileTap(int index) {
+    setState(() {
+      selectedOptionIndex = index;
+    });
   }
 
-  // Method to get description based on index
   String getDescription(int index) {
     switch (index) {
       case 0:
@@ -194,7 +136,17 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
     }
   }
 
-  // Method to get title based on index
+  Widget getTempScreen(int index) {
+    switch (index) {
+      case 0:
+      case 1:
+      case 2:
+        return TempScreen(optionName: getTitle(index));
+      default:
+        return Container();
+    }
+  }
+
   String getTitle(int index) {
     switch (index) {
       case 0:
@@ -207,70 +159,12 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
         return '';
     }
   }
-
-  // Temp Screen Widgets
-  // (These can be in separate files if preferred)
-
-  Widget getTempScreen(int index) {
-    switch (index) {
-      case 0:
-        return TempScreenPM1(optionName: getTitle(index));
-      case 1:
-        return TempScreenPM2(optionName: getTitle(index));
-      case 2:
-        return TempScreenPM3(optionName: getTitle(index));
-      default:
-        return Container();
-    }
-  }
 }
 
-class TempScreenPM1 extends StatelessWidget {
+class TempScreen extends StatelessWidget {
   final String optionName;
 
-  const TempScreenPM1({Key? key, required this.optionName}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(optionName),
-      ),
-      body: Center(
-        child: Text(
-          'This is a temporary screen for $optionName',
-          style: const TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class TempScreenPM2 extends StatelessWidget {
-  final String optionName;
-
-  const TempScreenPM2({Key? key, required this.optionName}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(optionName),
-      ),
-      body: Center(
-        child: Text(
-          'This is a temporary screen for $optionName',
-          style: const TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class TempScreenPM3 extends StatelessWidget {
-  final String optionName;
-
-  const TempScreenPM3({Key? key, required this.optionName}) : super(key: key);
+  const TempScreen({Key? key, required this.optionName}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

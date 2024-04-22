@@ -1,7 +1,4 @@
 import 'package:aerogotchi/components/navigation_helper.dart';
-import 'package:aerogotchi/screen/dronecontrolscreen.dart';
-import 'package:aerogotchi/screen/settingscreen.dart';
-import 'package:aerogotchi/screen/statusmenuscreen.dart';
 import 'package:flutter/material.dart';
 
 Container buildActionTopBox(
