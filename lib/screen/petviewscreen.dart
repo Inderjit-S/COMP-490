@@ -54,7 +54,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
     _neglectTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         neglectTimerSeconds =
-            NeglectService.inactivityDuration.inSeconds - timer.tick;
+            NeglectService.inactivityDur96ation.inSeconds - timer.tick;
       });
     });
   }
