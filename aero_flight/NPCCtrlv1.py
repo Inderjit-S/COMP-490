@@ -19,9 +19,6 @@ x, y = 500, 500  # Drone's initial position
 a = 0
 yaw = 0
 kp.init()
-# me = tello.Tello()
-# me.connect()
-# print(me.get_battery())
 
 # NPC Vars
 dir = 1
@@ -48,6 +45,7 @@ def getKeyboardInput():
             print("Switched to keyboard mode")
     if kp.getKey("m") and mode_check: mode_check = False
 
+
     if mode == "keyboard":
         if kp.getKey("LEFT"): lr = -speed; x -= 1
         if kp.getKey("RIGHT"): lr = speed; x += 1
@@ -57,8 +55,6 @@ def getKeyboardInput():
         if kp.getKey("s"): ud = -speed
         if kp.getKey("a"): yv = -aspeed
         if kp.getKey("d"): yv = aSpeed
-        # if kp.getKey("q"): me.land(); sleep(3)
-        # if kp.getKey("e"): me.takeoff()
 
     if kp.getKey("p"): sys.exit()
 
@@ -69,9 +65,10 @@ def change_state(arr):
     return x
 
 def process_change(x):
-    DJIDirX, DJIDirY = 0,0
     global dir, random
+    DJIDirX, DJIDirY = 0,0
     movement_decision = np.random.default_rng().integers(low=0, high=100, size=1)
+
     if movement_decision >= 0 and movement_decision <=2: 
         print("new dir")
         random = np.random.default_rng().integers(low=-50, high=50, size=2)
@@ -80,7 +77,7 @@ def process_change(x):
     elif movement_decision > 2 and movement_decision <=70: print('don"t move')
     else:
         print("move")
-        process_move(dir, random)
+        DJIDirX, DJIDirY = process_move(dir, random)
     
     return [DJIDirX, DJIDirY]
 
@@ -93,6 +90,7 @@ def process_move(a, arr):
     x_travel = (start_pos_x+arr[0])-x
     y_travel = (start_pos_y+arr[1])-y
     
+    # Updates X coordinate
     if abs(x_travel) < speed: x = x
     elif x_travel < 0: 
         x -= speed
@@ -100,6 +98,8 @@ def process_move(a, arr):
     elif x_travel > 0: 
         x += speed
         if x >= start_pos_x + 50: x = start_pos_x + 49
+    
+    # Updates Y coordinate
     if abs(y_travel) < speed: y = y
     elif y_travel < 0: 
         y -= speed
@@ -126,7 +126,6 @@ while True:
     drawDynamicBoxWithDroneDot(img, x, y, screenWidth, screenHeight, initialBoxSize)  # Updated function call
     cv2.imshow("Output", img)
     print(x,y)
-    # print(me.get_current_state())
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
