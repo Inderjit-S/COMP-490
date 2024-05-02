@@ -27,12 +27,10 @@ class HappinessLevelService {
   static Future<void> decreaseHappinessLevel(int decrement) async {
     try {
       final currentHappinessLevel = await getHappinessLevel();
-      if (currentHappinessLevel != null) {
-        final newHappinessLevel =
-            (currentHappinessLevel - decrement).clamp(0, maxHappinessLevel);
-        await updateHappinessLevel(newHappinessLevel);
-      }
-    } catch (e) {
+      final newHappinessLevel =
+          (currentHappinessLevel - decrement).clamp(0, maxHappinessLevel);
+      await updateHappinessLevel(newHappinessLevel);
+        } catch (e) {
       print('Error decreasing happiness level: $e');
     }
   }
@@ -40,15 +38,13 @@ class HappinessLevelService {
   static Future<void> tryUpdateHappinessLevel(int increment) async {
     try {
       final currentHappinessLevel = await getHappinessLevel();
-      if (currentHappinessLevel != null) {
-        final newHappinessLevel = currentHappinessLevel + increment;
-        if (newHappinessLevel <= maxHappinessLevel) {
-          await updateHappinessLevel(newHappinessLevel);
-        } else {
-          await updateHappinessLevel(maxHappinessLevel);
-        }
+      final newHappinessLevel = currentHappinessLevel + increment;
+      if (newHappinessLevel <= maxHappinessLevel) {
+        await updateHappinessLevel(newHappinessLevel);
+      } else {
+        await updateHappinessLevel(maxHappinessLevel);
       }
-    } catch (e) {
+        } catch (e) {
       print('Error updating happiness level: $e');
     }
   }

@@ -11,11 +11,9 @@ class HungerLevelService {
   static Future<void> tryUpdateHungerLevel(int increment) async {
     try {
       final currentHungerLevel = await getHungerLevel();
-      if (currentHungerLevel != null) {
-        final newHungerLevel = calculateNewHungerLevel(currentHungerLevel, increment);
-        await updateHungerLevel(newHungerLevel);
-      }
-    } catch (e) {
+      final newHungerLevel = calculateNewHungerLevel(currentHungerLevel, increment);
+      await updateHungerLevel(newHungerLevel);
+        } catch (e) {
       print('Error updating hunger level: $e');
     }
   }
