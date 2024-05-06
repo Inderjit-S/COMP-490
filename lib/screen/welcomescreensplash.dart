@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:aerogotchi/screen/idlescreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -137,14 +136,14 @@ class AnimatedCloud extends StatelessWidget {
             child:
                 Icon(Icons.cloud, color: Colors.white, size: kSmallCloudSize),
           ),
-          Align(
+          const Align(
             alignment: Alignment.center,
             child: Icon(Icons.cloud, color: Colors.white, size: kBigCloudSize),
           ),
-          Align(
+          const Align(
             alignment: Alignment.centerRight,
             child:
-                Icon(Icons.cloud, color: Colors.white, size: kSmallCloudSize),
+                const Icon(Icons.cloud, color: Colors.white, size: kSmallCloudSize),
           ),
         ],
       ),

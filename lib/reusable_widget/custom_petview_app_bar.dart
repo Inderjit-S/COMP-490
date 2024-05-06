@@ -1,5 +1,4 @@
 import 'package:aerogotchi/components/navigation_helper.dart';
-import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:flutter/material.dart';
 
 class CustomPetViewAppBar extends StatelessWidget

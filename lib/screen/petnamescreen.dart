@@ -1,7 +1,6 @@
 import 'package:aerogotchi/components/navigation_helper.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
-import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:flutter/material.dart';
 import '../reusable_widget/reusable_widget.dart';
 import 'package:firebase_database/firebase_database.dart'; // Import Firebase Realtime Database
@@ -27,8 +26,7 @@ class _PetNameScreen extends State<PetNameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    String petName =
-        widget.petName ?? ''; //return widget.petName if not null and '' if null
+
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
@@ -88,7 +86,7 @@ class _PetNameScreen extends State<PetNameScreen> {
                         "e.g. Sparky, AeroBot, SkyDancer",
                         Icons.pets_outlined,
                         false,
-                        characterNameController,
+                        characterNameController
                       ),
                       ElevatedButton(
                         onPressed: () { //Validate petname is not empty when pressed and navigate to PetviewScreen upon success

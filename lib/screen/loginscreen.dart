@@ -1,11 +1,7 @@
-import 'dart:ffi';
-
-import 'package:aerogotchi/screen/homescreen.dart';
 import 'package:aerogotchi/screen/petnamescreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:aerogotchi/screen/signupscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -85,18 +81,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: 79,
                 child: signInButton(context, true, () async {
                   try {
-                    UserCredential userCredential = await FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text);
-
                     // Retrieve the pet name from the database
                     final dbRef = FirebaseDatabase.instance.reference().child('petname');
                     DatabaseEvent event = await dbRef.once();
                     String petName = event.snapshot.value.toString();
 
                     // Check if the pet name exists
-                    if (petName.isNotEmpty && petName != null) {
+                    if (petName.isNotEmpty) {
                       // Pass the pet name to the PetViewScreen
                       Navigator.pushReplacement(
                           context,
