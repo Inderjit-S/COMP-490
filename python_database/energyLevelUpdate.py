@@ -21,7 +21,7 @@ while True:
     db.reference("/").update({"energy_level" : tello.get_battery()})
     data = ref.get()
     print(data)
-    sleep(5) # Change to however long we want it to update
+    sleep(30) # Change to however long we want it to update
 
 
 # Manual update for energy level

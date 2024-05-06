@@ -44,6 +44,8 @@ dependencies:
   firebase_database: ^10.4.5
   flutter_local_notifications: ^17.0.0
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
 

@@ -21,7 +21,6 @@ Image SmallerlogoWidget(String imageName) //Aerogotchi logo (change width and he
     height:175,
   );
 }
-
 TextField reusableTextField(String text, IconData icon, bool isPasswordType, TextEditingController controller) //TextField for (User,Pass,CharacterName)
 {
   return TextField(
@@ -45,14 +44,15 @@ TextField reusableTextField(String text, IconData icon, bool isPasswordType, Tex
         borderRadius: BorderRadius.circular(40.0),
         borderSide: const BorderSide(width: 1.0, style: BorderStyle.none),
       ),
-    contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0 ),
-    isDense: true,
+      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0 ),
+      isDense: true,
     ),
     keyboardType: isPasswordType
-    ? TextInputType.visiblePassword
-    :TextInputType.emailAddress,
-    );
+        ? TextInputType.visiblePassword
+        :TextInputType.emailAddress,
+  );
 }
+
 
 Container signInButton(BuildContext context, bool isLogin, Function onTap) //SignInButton Function
 {

@@ -27,7 +27,7 @@ class _CustomJoystickState extends State<CustomJoystick> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       final RenderBox renderBoxWidget =
           _joystickContainer.currentContext?.findRenderObject() as RenderBox;
       final offset = renderBoxWidget.localToGlobal(Offset.zero);

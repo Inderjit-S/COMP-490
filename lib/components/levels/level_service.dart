@@ -27,11 +27,9 @@ class LevelService {
       String childName, int increment, int maxValue) async {
     try {
       final currentLevel = await getLevel(childName);
-      if (currentLevel != null) {
-        final newLevel = (currentLevel + increment).clamp(0, maxValue);
-        await updateLevel(childName, newLevel);
-      }
-    } catch (e) {
+      final newLevel = (currentLevel + increment).clamp(0, maxValue);
+      await updateLevel(childName, newLevel);
+        } catch (e) {
       print('Error updating $childName level: $e');
     }
   }

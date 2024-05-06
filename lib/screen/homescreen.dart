@@ -3,9 +3,7 @@ import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:aerogotchi/screen/loginscreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
 
 class HomeScreen extends StatefulWidget {
   final String petName;

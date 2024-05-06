@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:flutter/services.dart';
 import 'package:aerogotchi/components/drone/custom_joystick.dart';
 import 'package:aerogotchi/components/navigation_helper.dart';
-import 'package:aerogotchi/screen/temphomescreen.dart';
 
 class DroneControlScreen extends StatefulWidget {
   final String petName;
