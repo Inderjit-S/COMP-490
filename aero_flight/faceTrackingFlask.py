@@ -27,9 +27,9 @@ def all():
     telloInstance.connect()
     telloInstance.streamon()
 
-    #telloInstance.takeoff()
-    #telloInstance.send_rc_control(0,0,20,0)
-    #time.sleep(3.5)
+    telloInstance.takeoff()
+    telloInstance.send_rc_control(0,0,20,0)
+    time.sleep(3.5)
 
     w, h = 360, 240
     fbRange = [6200, 6800]

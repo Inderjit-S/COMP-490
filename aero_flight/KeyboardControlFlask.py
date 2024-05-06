@@ -10,7 +10,7 @@ app = Flask(__name__)
 # KP.init()
 # me = Tello()
 # me.connect()
-# print(me.get_battery())
+# \\print(me.get_battery())
 # me.streamon()
 
 @app.route('/keyboard_control')
