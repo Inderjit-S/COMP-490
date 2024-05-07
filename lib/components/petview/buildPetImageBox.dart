@@ -1,7 +1,8 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 
-class buildPetImageBox extends StatelessWidget {
+class buildPetImageBox extends StatefulWidget {
   final String petName;
   final int hungerLevel;
   final int happinessLevel;
@@ -18,7 +19,37 @@ class buildPetImageBox extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _buildPetImageBoxState createState() => _buildPetImageBoxState();
+}
+
+class _buildPetImageBoxState extends State<buildPetImageBox> {
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(minutes: 1), (timer) {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    String image;
+    if (widget.hungerLevel < 7) {
+      image = "background_image/unhappy.png";
+    } else if (widget.hungerLevel < 5) {
+      image = "background_image/original.png";
+    } else {
+      image = "background_image/excited.png";
+    }
+
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF666D8C),
@@ -28,16 +59,16 @@ class buildPetImageBox extends StatelessWidget {
           width: 2.0,
         ),
       ),
-      width: width,
+      width: widget.width,
       height: 350,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          SmallerlogoWidget("background_image/aerogotchi.png"),
+          SmallerlogoWidget(image),
           const SizedBox(height: 5),
           Text(
-            '$petName',
+            '${widget.petName}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 26,
@@ -45,7 +76,7 @@ class buildPetImageBox extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            'Hunger Level: $hungerLevel',
+            'Hunger Level: ${widget.hungerLevel}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
@@ -53,15 +84,14 @@ class buildPetImageBox extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(
-            'Happiness Level: $happinessLevel',
+            'Happiness Level: ${widget.happinessLevel}',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
             ),
           ),
           Text(
-            'Neglect Timer: $neglectTimerSeconds seconds',
-            // 'Neglect Timer: 0 seconds',
+            'Neglect Timer: ${widget.neglectTimerSeconds} seconds',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 20,
