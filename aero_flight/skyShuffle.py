@@ -12,31 +12,51 @@ telloInstance.takeoff()
 time.sleep(2)
 
 def danceOne():
+    print("1")
     telloInstance.flip_right()
+    time.sleep(2)
     telloInstance.flip_left()
+    time.sleep(2)
     telloInstance.flip_back()
+    time.sleep(2)
     telloInstance.land()
 
 def danceTwo():
-    telloInstance.send_rc_control(15, 0, 0, 0) # left
-    telloInstance.send_rc_control(-30, 0, 0, 0) # right
-    telloInstance.send_rc_control(15, 0, 0, 0) # back to center
+    print("2")
+    telloInstance.send_rc_control(-30, 0, 0, 0) # left
+    time.sleep(2)
+    telloInstance.send_rc_control(30, 0, 0, 0) # right
+    time.sleep(2)
+    telloInstance.send_rc_control(-30, 0, 0, 0) # back to center
+    time.sleep(2)
+    telloInstance.send_rc_control(0, 0, 0, 0)
+    time.sleep(0.5)
     telloInstance.flip_back()
+    time.sleep(2)
     telloInstance.land()
 
 def danceThree():
+    print("3")
     telloInstance.flip_back()
-    #might need sleep here?
+    # might need sleep here?
     telloInstance.flip_back()
-    telloInstance.send_rc_control(0, 0, 15, 0) # move up
+    telloInstance.send_rc_control(0, 0, 40, 0) # move up
+    time.sleep(2)
+    telloInstance.send_rc_control(0, 0, 0, 0)
+    time.sleep(0.5)
     telloInstance.flip_right()
     telloInstance.flip_left()
     telloInstance.land()
 
 def main():
-    random.choices(danceOne, danceTwo, danceThree)
+    # random.choice(danceOne(), danceTwo(), danceThree())
+    random_function = random.choice([danceOne, danceTwo, danceThree])
+    random_function()
 
 main()
+# danceOne()
+# danceTwo()
+# danceThree()
 
 # make condition to check if drone battery is above 50%. only execute if above 60%.
 
