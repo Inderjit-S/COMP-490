@@ -1,6 +1,6 @@
 import 'package:aerogotchi/screen/dronecontrolscreen.dart';
 import 'package:aerogotchi/screen/foodmenuscreen.dart';
-import 'package:aerogotchi/screen/homescreen.dart';
+import 'package:aerogotchi/screen/logoutscreen.dart';
 import 'package:aerogotchi/screen/idlescreen.dart';
 import 'package:aerogotchi/screen/petnamescreen.dart';
 import 'package:aerogotchi/screen/petviewscreen.dart';
@@ -63,10 +63,10 @@ void navigateToDroneControlScreen(BuildContext context,String petName){
                 builder: (context) => DroneControlScreen(petName: petName)),
           );
 }
-void navigateToHomeScreen(BuildContext context,String petName){
+void navigateToLogoutScreen(BuildContext context,String petName){
   Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => HomeScreen(petName: petName)),
+                builder: (context) => LogoutScreen(petName: petName)),
           );
 }

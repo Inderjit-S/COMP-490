@@ -5,15 +5,15 @@ import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
+class LogoutScreen extends StatefulWidget {
   final String petName;
-  const HomeScreen({Key? key, required this.petName}) : super(key: key);
+  const LogoutScreen({Key? key, required this.petName}) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<LogoutScreen> createState() => _LogoutScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _LogoutScreenState extends State<LogoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,12 +72,6 @@ class _HomeScreenState extends State<HomeScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
-      // Pass petName to the PetViewScreen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => PetViewScreen(petName: petName)),
       );
     });
   }

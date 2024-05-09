@@ -1,4 +1,7 @@
+import 'package:aerogotchi/screen/logoutscreen.dart';
 import 'package:aerogotchi/screen/idlescreen.dart';
+import 'package:aerogotchi/screen/loginscreen.dart';
+import 'package:aerogotchi/screen/signupscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:aerogotchi/components/notification_handler.dart';

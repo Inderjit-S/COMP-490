@@ -49,7 +49,7 @@ class CustomPetViewAppBar extends StatelessWidget
         IconButton(
           icon: const Icon(Icons.logout_sharp),
           onPressed: () {
-            navigateToHomeScreen(context, petName);
+            navigateToLogoutScreen(context, petName);
           },
         ),
       ],
