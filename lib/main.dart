@@ -4,7 +4,7 @@ import 'package:aerogotchi/screen/loginscreen.dart';
 import 'package:aerogotchi/screen/signupscreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:aerogotchi/components/notification_handler.dart';
+import 'package:aerogotchi/components/notifications/notification_handler.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

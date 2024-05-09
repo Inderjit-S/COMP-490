@@ -1,7 +1,7 @@
 import 'package:aerogotchi/components/levels/energy_level_service.dart';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
-import 'package:aerogotchi/components/notification_handler.dart';
+import 'package:aerogotchi/components/notifications/notification_handler.dart';
 
 class LevelFetchService {
   static Future<void> fetchEnergyLevel(Function(int) setState) async {

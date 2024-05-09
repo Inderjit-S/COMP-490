@@ -1,3 +1,4 @@
+import 'package:aerogotchi/components/levels/event_service.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -42,7 +43,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       leading: IconButton(
         icon: const Icon(Icons.arrow_back),
-        onPressed: () {
+        onPressed: () async {
+          // Set the event back to "manual"
+          try {
+            await EventService.updateEvent("manual");
+          } catch (error) {
+            print('Error updating event: $error');
+          }
+          try {
+      await EventService.updateTakePhoto(false);
+    } catch (error) {
+      print('Error updating take photo: $error');
+    }
           Navigator.pop(context);
         },
         color: const Color.fromARGB(68, 0, 0, 0).withOpacity(0.3),

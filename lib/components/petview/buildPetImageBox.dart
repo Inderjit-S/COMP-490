@@ -43,7 +43,7 @@ class _buildPetImageBoxState extends State<buildPetImageBox> {
   Widget build(BuildContext context) {
     String image;
     if (widget.hungerLevel < 7) {
-      image = "background_image/unhappy.png";
+      image = "background_image/aerogotchi.png";
     } else if (widget.hungerLevel < 5) {
       image = "background_image/original.png";
     } else {
@@ -66,37 +66,37 @@ class _buildPetImageBoxState extends State<buildPetImageBox> {
         mainAxisSize: MainAxisSize.min,
         children: [
           SmallerlogoWidget(image),
-          const SizedBox(height: 5),
+          const SizedBox(height: 10),
           Text(
-            '${widget.petName}',
+            '"${widget.petName}"',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 26,
             ),
           ),
-          const SizedBox(height: 5),
-          Text(
-            'Hunger Level: ${widget.hungerLevel}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-          const SizedBox(height: 5),
-          Text(
-            'Happiness Level: ${widget.happinessLevel}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
-          Text(
-            'Neglect Timer: ${widget.neglectTimerSeconds} seconds',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          ),
+          // const SizedBox(height: 5),
+          // Text(
+          //   'Hunger Level: ${widget.hungerLevel}',
+          //   style: const TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 20,
+          //   ),
+          // ),
+          // const SizedBox(height: 5),
+          // Text(
+          //   'Happiness Level: ${widget.happinessLevel}',
+          //   style: const TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 20,
+          //   ),
+          // ),
+          // Text(
+          //   'Neglect Timer: ${widget.neglectTimerSeconds} seconds',
+          //   style: const TextStyle(
+          //     color: Colors.white,
+          //     fontSize: 20,
+          //   ),
+          // ),
         ],
       ),
     );

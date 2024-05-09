@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:aerogotchi/components/levels/event_service.dart';
 import 'package:aerogotchi/components/navigation_helper.dart';
 import 'package:aerogotchi/components/petview/buildBottomActionBox.dart';
 import 'package:aerogotchi/components/petview/buildPetImageBox.dart';
@@ -25,6 +26,7 @@ class _PetViewScreenState extends State<PetViewScreen> {
   int hungerLevel = 0;
   int happinessLevel = 0;
   int neglectTimerSeconds = 0; // Variable to store the neglect timer value
+  String event = "";
 
   late HungerLevelTimer _hungerLevelTimer;
   late HappinessLevelTimer _happinessLevelTimer;
@@ -33,6 +35,11 @@ class _PetViewScreenState extends State<PetViewScreen> {
   @override
   void initState() {
     super.initState();
+    EventService.getEvent().then((value) {
+      setState(() {
+        event = "manual";
+      });
+    });
     HungerLevelService.getHungerLevel().then((value) {
       setState(() {
         hungerLevel = value;
@@ -142,6 +149,14 @@ class _PetViewScreenState extends State<PetViewScreen> {
                           },
                         ),
                         const SizedBox(height: 20),
+//                         Text(
+//   'Event: ${event.toString()}',
+//   style: const TextStyle(
+//     color: Colors.white,
+//     fontSize: 20,
+//   ),
+// ),
+
                       ],
                     ),
                   ),

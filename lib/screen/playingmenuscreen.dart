@@ -1,8 +1,9 @@
+import 'package:aerogotchi/components/levels/event_service.dart';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/playingmenu/my_list_file.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
-import 'package:firebase_database/firebase_database.dart';
+import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:flutter/material.dart';
 
 class PlayingMenuScreen extends StatefulWidget {
@@ -14,25 +15,48 @@ class PlayingMenuScreen extends StatefulWidget {
 
 class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
   int selectedOptionIndex = -1;
-  final DatabaseReference dbRefHappiness =
-      FirebaseDatabase.instance.reference().child('happiness_level');
+  
+ void navigateToTempScreenAndUpdateHappiness(int index) async {
+  // Get the name of the selected game
+  String selectedGame = getTitle(index);
 
-  void navigateToTempScreenAndUpdateHappiness(int index) async {
-    // Navigate to the temporary screen for the selected option
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => getTempScreen(selectedOptionIndex),
-      ),
-    );
-
-    // Update happiness level
-    await HappinessLevelService.tryUpdateHappinessLevel(2);
+  // Update the event in the database to the selected game
+  try {
+    await EventService.updateEvent(selectedGame);
+  } catch (error) {
+    print('Error updating event: $error');
   }
+
+  // If the selected game is "Photo Pilot", update the take_photo boolean to true
+  if (selectedGame == "Photo Pilot") {
+    try {
+      await EventService.updateTakePhoto(true);
+    } catch (error) {
+      print('Error updating take photo: $error');
+    }
+  }else{
+    try {
+      await EventService.updateTakePhoto(false);
+    } catch (error) {
+      print('Error updating take photo: $error');
+    }
+  }
+
+  // Update happiness level
+  await HappinessLevelService.tryUpdateHappinessLevel(2);
+
+  // Navigate to the temporary screen for the selected option
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => TempScreen(optionName: getTitle(index)),
+    ),
+  );
+}
+
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: CustomAppBar(titleText: 'PLAYING MENU'),
       extendBodyBehindAppBar: true,
@@ -160,7 +184,6 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
     }
   }
 }
-
 class TempScreen extends StatelessWidget {
   final String optionName;
 
@@ -168,14 +191,51 @@ class TempScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(optionName),
-      ),
-      body: Center(
-        child: Text(
-          'This is a temporary screen for $optionName',
-          style: const TextStyle(fontSize: 24),
+    return WillPopScope(
+      // This function will be called when the user presses the back button
+      onWillPop: () async {
+        // Set the event back to "manual"
+        try {
+          await EventService.updateEvent("manual");
+        } catch (error) {
+          print('Error updating event: $error');
+        }
+        return true; // Allow the back navigation
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(titleText: optionName),
+      extendBodyBehindAppBar: true,
+        body: Center(
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: BackgroundGradient.blueGradient, // Apply the specified decoration here
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SmallerlogoWidget("background_image/aerogotchi.png"), // SmallerlogoWidget
+                SizedBox(height: 20), // Spacer
+                ElevatedButton(
+                  onPressed: () async {
+                    // Set the event back to "manual"
+                    try {
+                      await EventService.updateEvent("manual");
+                    } catch (error) {
+                      print('Error updating event: $error');
+                    }
+                    try {
+      await EventService.updateTakePhoto(false);
+    } catch (error) {
+      print('Error updating take photo: $error');
+    }
+                    // Navigate back
+                    Navigator.pop(context);
+                  },
+                  child: Text('Go Back'),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
