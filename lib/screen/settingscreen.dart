@@ -76,7 +76,7 @@ class _SettingsState extends State<SettingScreen> {
                   children: [
                     CustomSettingsButton(
                       text: 'Restart',
-                       onPressed: () => navigateToPetNameScreen(context, widget.petName),
+                       onPressed: () => navigateToIdleScreen(context),
                     ),
                     CustomSettingsButton(
                       text: 'Back',
