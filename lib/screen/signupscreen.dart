@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'loginscreen.dart';
 import 'logoutscreen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -66,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LogoutScreen(petName: '',),
+                            builder: (context) => LoginScreen(),
                           ),
                         );
                       }).catchError((error) {
