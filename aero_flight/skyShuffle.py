@@ -23,11 +23,11 @@ def danceOne():
 
 def danceTwo():
     print("2")
-    telloInstance.send_rc_control(-30, 0, 0, 0) # left
+    telloInstance.send_rc_control(-30, 0, 30, 0) # left
     time.sleep(2)
-    telloInstance.send_rc_control(30, 0, 0, 0) # right
+    telloInstance.send_rc_control(30, 0, -60, 0) # right
     time.sleep(2)
-    telloInstance.send_rc_control(-30, 0, 0, 0) # back to center
+    telloInstance.send_rc_control(-30, 0, 30, 0) # back to center
     time.sleep(2)
     telloInstance.send_rc_control(0, 0, 0, 0)
     time.sleep(0.5)
