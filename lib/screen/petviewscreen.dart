@@ -142,10 +142,10 @@ class _PetViewScreenState extends State<PetViewScreen> {
                         BottomActionBox(
                           width: screenWidth * 0.7,
                           onFoodMenuPressed: () {
-                          navigateToFoodMenuScreen(context);
+                            navigateToFoodMenuScreen(context);
                           },
                           onPlayingMenuPressed: () {
-                           navigateToPlayingMenuScreen(context);
+                            navigateToPlayingMenuScreen(context);
                           },
                         ),
                         const SizedBox(height: 20),
