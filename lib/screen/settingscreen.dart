@@ -3,6 +3,7 @@ import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_settings_button.dart';
 import 'package:flutter/material.dart';
 import '../reusable_widget/reusable_widget.dart';
+import 'package:aerogotchi/screen/petnamescreen.dart'; // Ensure to import PetNameScreen
 
 class SettingScreen extends StatefulWidget {
   final String petName;
@@ -37,7 +38,7 @@ class _SettingsState extends State<SettingScreen> {
 
     // Adjust these variables for container width and height
     final double containerWidth = screenWidth * 0.6;
-    final double containerHeight = screenHeight * 0.2;
+    final double containerHeight = screenHeight * 0.3; // Adjusted height to fit an extra button
 
     return Scaffold(
       body: Container(
@@ -76,7 +77,16 @@ class _SettingsState extends State<SettingScreen> {
                   children: [
                     CustomSettingsButton(
                       text: 'Restart',
-                       onPressed: () => navigateToIdleScreen(context),
+                      onPressed: () => navigateToIdleScreen(context),
+                    ),
+                    CustomSettingsButton(
+                      text: 'Rename Pet',
+                      onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PetNameScreen(petName: widget.petName),
+                        ),
+                      ),
                     ),
                     CustomSettingsButton(
                       text: 'Back',
@@ -91,6 +101,4 @@ class _SettingsState extends State<SettingScreen> {
       ),
     );
   }
-
-
 }
