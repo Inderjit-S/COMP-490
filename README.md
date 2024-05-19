@@ -14,6 +14,17 @@ Aerogotchi is a virtual pet game that integrates with Firebase for data manageme
 - [License](#license)
 - [Contact](#contact)
 
+## Links
+**Software Test Plan:** 
+https://docs.google.com/document/d/1wUuOHXwFLOwWIZ4t516MHdSgkgRnha3pzcCP_iRCi5g/edit 
+
+**Software Design Document:**
+https://docs.google.com/document/d/1uBaCRTCj5k--EP413twUvABpWec7-mqO/edit?usp=sharing&ouid=107506771490376668422&rtpof=true&sd=true
+
+**Software Requirements Specification:**
+https://docs.google.com/document/d/1z3ZmPZB15iBspx7jWsXARUXx9nUsBS_I_8iQ6-CTyJs/edit?usp=sharing
+
+
 ## Features
 
 - **Virtual Pet Management**: Feed, play, and take care of your virtual pet.
