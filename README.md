@@ -1,6 +1,6 @@
 # Aerogotchi
 
-Aerogotchi is a virtual pet game that integrates with Firebase for data management, Flutter for a cross-platform mobile experience, and using the DJI Tello Drone SDK. This application allows users to interact with their virtual pet by feeding, playing, and monitoring their pet's health and happiness levels.
+Aerogotchi is a virtual pet game that created with Flutter for a cross-platform mobile experience, integrates with Firebase for data management, and uses the DJI Tello Drone SDK. This application allows users to interact with their virtual pet by feeding, playing, and monitoring their pet's health and happiness levels.
 
 
 ## Table of Contents
