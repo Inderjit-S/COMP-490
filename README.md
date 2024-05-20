@@ -1,6 +1,6 @@
 # Aerogotchi
 
-Aerogotchi is a virtual pet game that created with Flutter for a cross-platform mobile experience, integrates with Firebase for data management, and uses the DJI Tello Drone SDK. This application allows users to interact with their virtual pet by feeding, playing, and monitoring their pet's health and happiness levels.
+Aerogotchi by Team OOeyGUI is a virtual pet game that created with Flutter for a cross-platform mobile experience, integrates with Firebase for data management, and uses the DJI Tello Drone SDK. This application allows users to interact with their virtual pet by feeding, playing, and monitoring their pet's health and happiness levels.
 
 
 ## Table of Contents
@@ -10,7 +10,6 @@ Aerogotchi is a virtual pet game that created with Flutter for a cross-platform 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies](#technologies)
-- [Contributing](#contributing)
 - [License](#license)
 - [Contact](#contact)
 
@@ -91,16 +90,11 @@ Once the app is running, you can interact with your virtual pet through various 
 - **Firebase**: Backend-as-a-Service providing real-time database and authentication.
 - **Dart**: Programming language optimized for building mobile apps.
 - **Python**: For the DJI Tello scripts
+  
+## COMP 491
 
-## Contributing
-
-We welcome contributions! Follow these steps to contribute:
-
-1. Fork the repository.
-2. Create a new branch: `git checkout -b feature/your-feature-name`.
-3. Make your changes and commit them: `git commit -m 'Add some feature'`.
-4. Push to the branch: `git push origin feature/your-feature-name`.
-5. Open a pull request.
+- **The intended audience is our development team and Professor Edmund Dantes.**
+- **Spring '24**
 
 ## License
 
