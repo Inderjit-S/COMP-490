@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:math' as Math;
@@ -6,12 +7,14 @@ class CustomJoystick extends StatefulWidget {
   final double radius;
   final double stickRadius;
   final Function callback;
+  final String position;
 
   const CustomJoystick({
     Key? key,
     required this.radius,
     required this.stickRadius,
     required this.callback,
+    required this.position,
   }) : super(key: key);
 
   @override
@@ -22,6 +25,7 @@ class _CustomJoystickState extends State<CustomJoystick> {
   final GlobalKey _joystickContainer = GlobalKey();
   double yOff = 0, xOff = 0;
   double _x = 0, _y = 0;
+  String _position = " ";
 
   @override
   void initState() {
@@ -43,9 +47,10 @@ class _CustomJoystickState extends State<CustomJoystick> {
     setState(() {
       _x = widget.radius;
       _y = widget.radius;
+      _position = widget.position;
     });
 
-    _sendCoordinates(_x, _y);
+    _sendCoordinates(_x, _y, _position);
   }
 
   int map(x, in_min, in_max, out_min, out_max) {
@@ -77,9 +82,10 @@ class _CustomJoystickState extends State<CustomJoystick> {
       setState(() {
         _x = x;
         _y = y;
+        _position = widget.position;
       });
 
-      _sendCoordinates(x, y);
+      _sendCoordinates(x, y, _position);
     }
   }
 
@@ -87,7 +93,7 @@ class _CustomJoystickState extends State<CustomJoystick> {
     _centerStick();
   }
 
-  void _sendCoordinates(double x, double y) {
+  void _sendCoordinates(double x, double y, String z) {
     double speed = y - widget.radius;
     double direction = x - widget.radius;
 
@@ -96,7 +102,7 @@ class _CustomJoystickState extends State<CustomJoystick> {
     var vDirection =
         map(direction, 0, (widget.radius - widget.stickRadius).floor(), 0, 100);
 
-    widget.callback(vDirection, vSpeed);
+    widget.callback(vDirection, vSpeed, z);
   }
 
   bool _isStickInside(x, y, circleX, circleY, circleRadius) {
@@ -139,5 +145,41 @@ class _CustomJoystickState extends State<CustomJoystick> {
         ),
       ),
     );
+  }
+}
+
+class JoystickService {
+  static Future<String> getJoystickLeft() async {
+    final dbRefJoystickLeft =
+        FirebaseDatabase.instance.reference().child('left_joystick_movement');
+    final snapshot = await dbRefJoystickLeft.once();
+    final data = snapshot.snapshot.value;
+    return data.toString();
+  }
+
+  static Future<String> getJoystickRight() async {
+    final dbRefJoystickRight =
+        FirebaseDatabase.instance.reference().child('right_joystick_movement');
+    final snapshot = await dbRefJoystickRight.once();
+    final data = snapshot.snapshot.value;
+    return data.toString();
+  }
+
+  static Future<void> updateJoystickLeft(String movement) async {
+    final dbRefJoystickLeft =
+        FirebaseDatabase.instance.reference().child('left_joystick_movement');
+    await dbRefJoystickLeft.set(movement).catchError((error) {
+      print('Error updating movementt: $error');
+      throw Exception('Failed to update movement');
+    });
+  }
+
+  static Future<void> updateJoystickRight(String movement) async {
+    final dbRefJoystickRight =
+        FirebaseDatabase.instance.reference().child('right_joystick_movement');
+    await dbRefJoystickRight.set(movement).catchError((error) {
+      print('Error updating movement: $error');
+      throw Exception('Failed to update movement');
+    });
   }
 }

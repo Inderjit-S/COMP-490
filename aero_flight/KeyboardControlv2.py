@@ -23,15 +23,17 @@ def get_keyboard_input(x1, y1, x2, y2):
     speed = 40
 
     # x1, x2, y1, and y2 if statements that will mimic the movement interpretation using Joystick Coordinates from Flutter
-    if x1 > 0 and y1 > -x1 and y1 < x1: print(f'{x1},{y1}:right') 
-    if x1 < 0 and y1 < -x1 and y1 > x1: print(f'{x1},{y1}:left') 
-    if y1 > 0 and y1 > x1 and y1 > -x1: print(f'{x1},{y1}:forward') 
-    if y1 < 0 and y1 < x1 and y1 < -x1: print(f'{x1},{y1}:backward') 
+    if x1 == 0 and y1 == 0: print(f'{x1},{y1}:origin')
+    elif x1 > 0 and y1 > -x1 and y1 < x1: print(f'{x1},{y1}:right') 
+    elif x1 < 0 and y1 < -x1 and y1 > x1: print(f'{x1},{y1}:left') 
+    elif y1 > 0 and y1 > x1 and y1 > -x1: print(f'{x1},{y1}:forward') 
+    elif y1 < 0 and y1 < x1 and y1 < -x1: print(f'{x1},{y1}:backward') 
 
-    if x2 > 0 and y2 > -x2 and y2 < x2: print(f'{x2},{y2}:rotateRight') 
-    if x2 < 0 and y2 < -x2 and y2 > x2: print(f'{x2},{y2}:rotateLeft') 
-    if y2 > 0 and y2 > x2 and y2 > -x2: print(f'{x2},{y2}:up') 
-    if y2 < 0 and y2 < x2 and y2 < -x2: print(f'{x2},{y2}:down') 
+    if x2 == 0 and y2 == 0: print(f'{x2},{y2}:origin')
+    elif x2 > 0 and y2 > -x2 and y2 < x2: print(f'{x2},{y2}:rotateRight') 
+    elif x2 < 0 and y2 < -x2 and y2 > x2: print(f'{x2},{y2}:rotateLeft') 
+    elif y2 > 0 and y2 > x2 and y2 > -x2: print(f'{x2},{y2}:up') 
+    elif y2 < 0 and y2 < x2 and y2 < -x2: print(f'{x2},{y2}:down') 
     
     # Original if statements for interpreting Keyboard Inputs using KeyPressModule
     if KP.getKey("LEFT"): lr = -speed

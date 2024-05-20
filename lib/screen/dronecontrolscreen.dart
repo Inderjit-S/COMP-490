@@ -8,7 +8,6 @@ class DroneControlScreen extends StatefulWidget {
   final String petName;
 
   const DroneControlScreen({Key? key, required this.petName}) : super(key: key);
-
   @override
   _DroneControlScreenState createState() => _DroneControlScreenState();
 }
@@ -17,11 +16,6 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
   @override
   void initState() {
     super.initState();
-    // Lock the orientation to landscape mode
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.landscapeLeft,
-    //   DeviceOrientation.landscapeRight,
-    // ]);
   }
 
   @override
@@ -34,8 +28,54 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
     super.dispose();
   }
 
-  void callback(x, y) {
-    log('callback x => $x and y $y');
+  void callback(x, y, pos) async {
+    String curr_movement = getJoystickSection(x, y, pos);
+    String db_movement = '';
+    if (pos == 'left') {
+      db_movement = await JoystickService.getJoystickLeft();
+    } else {
+      db_movement = await JoystickService.getJoystickRight();
+    }
+    if (db_movement != curr_movement) {
+      if (pos == 'left') {
+        JoystickService.updateJoystickLeft(curr_movement);
+      } else {
+        JoystickService.updateJoystickRight(curr_movement);
+      }
+    }
+    log('callback $pos => x $x and y $y and pos $curr_movement');
+  }
+
+  String getJoystickSection(x, y, z) {
+    String joystickDirection = 'Origin';
+    if (x == 0 && y == 0) {
+      joystickDirection = 'Origin';
+    } else if (x > 0 && y > -x && y < x) {
+      if (z == 'left') {
+        joystickDirection = 'Rotate R';
+      } else {
+        joystickDirection = 'Right';
+      }
+    } else if (x < 0 && y < -x && y > x) {
+      if (z == 'left') {
+        joystickDirection = 'Rotate L';
+      } else {
+        joystickDirection = 'Left';
+      }
+    } else if (y > 0 && y > x && y > -x) {
+      if (z == 'left') {
+        joystickDirection = 'Up';
+      } else {
+        joystickDirection = 'Forward';
+      }
+    } else if (y < 0 && y < x && y < -x) {
+      if (z == 'left') {
+        joystickDirection = 'Down';
+      } else {
+        joystickDirection = 'Backward';
+      }
+    }
+    return joystickDirection;
   }
 
   @override
@@ -75,6 +115,7 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
                   ),
                 );
               },
+              position: "Null",
             ),
           ],
         ),
@@ -85,6 +126,7 @@ class _DroneControlScreenState extends State<DroneControlScreen> {
 
 class LandscapeDroneControlMenu extends StatelessWidget {
   final String petName;
+  final String position;
   final Function callback;
   final Function onHomePressed;
   final Function onCameraPressed;
@@ -94,6 +136,7 @@ class LandscapeDroneControlMenu extends StatelessWidget {
     required this.callback,
     required this.onHomePressed,
     required this.onCameraPressed,
+    required this.position,
   });
 
   @override
@@ -107,6 +150,7 @@ class LandscapeDroneControlMenu extends StatelessWidget {
             radius: 50.0,
             stickRadius: 10,
             callback: callback,
+            position: "left",
           ),
         ),
         Positioned(
@@ -116,6 +160,7 @@ class LandscapeDroneControlMenu extends StatelessWidget {
             radius: 50.0,
             stickRadius: 10,
             callback: callback,
+            position: "right",
           ),
         ),
         Align(
