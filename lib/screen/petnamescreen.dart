@@ -1,4 +1,6 @@
+import 'dart:math';
 import 'package:aerogotchi/components/navigation_helper.dart';
+import 'package:aerogotchi/components/personality.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -20,13 +22,15 @@ class _PetNameScreen extends State<PetNameScreen> {
   DatabaseReference databaseReference =
       FirebaseDatabase.instance.reference().child('petname');
 
-  void savePetName(String petName) {
-    databaseReference.set(petName); // Set the pet name in the database
+  // Updated savePetName method to include initPersonality call
+  void savePetName(String petName) async {
+    await databaseReference.set(petName); // Set the pet name in the database
+    // Call initPersonality after saving the pet name
+    PersonalityService().initPersonality();
   }
 
   @override
   Widget build(BuildContext context) {
-
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 

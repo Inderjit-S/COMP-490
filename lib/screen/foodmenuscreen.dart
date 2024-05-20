@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
@@ -14,24 +15,86 @@ class FoodMenuScreen extends StatefulWidget {
 
 class _FoodMenuScreenState extends State<FoodMenuScreen> {
   int? selectedButtonIndex;
-  // Retrieve the Energy,Happiness,Hunger name from the database
+  int personality = 0; 
+  int ham_hunger_weight  = 0;
+  int carrot_hunger_weight  = 0;
+  int icecream_hunger_weight  = 0;
+  int bread_hunger_weight  = 0;
+  int ham_happiness_weight = 0;
+  int carrot_happines_weight  = 0;
+  int icecream_happiness_weight  = 0;
+  int bread_happiness_weight  = 0;
+      
+
+  // Retrieve the Energy, Happiness, Hunger name from the database
   final dbRefper = FirebaseDatabase.instance.reference().child('personality');
-  final dbRefEnergy =
-      FirebaseDatabase.instance.reference().child('energy_level');
-  final dbRefHappiness =
-      FirebaseDatabase.instance.reference().child('happiness_level');
-  final dbRefHunger =
-      FirebaseDatabase.instance.reference().child('hunger_level');
+  final dbRefEnergy = FirebaseDatabase.instance.reference().child('energy_level');
+  final dbRefHappiness = FirebaseDatabase.instance.reference().child('happiness_level');
+  final dbRefHunger = FirebaseDatabase.instance.reference().child('hunger_level');
+
   @override
   void initState() {
     super.initState();
+    _initializePersonality();
+  }
+
+  void _initializePersonality() async {
+    // Fetch personality from the database
+    final personalitySnapshot = await dbRefper.once();
+    setState(() {
+      personality = personalitySnapshot.snapshot.value as int? ?? 0;
+      getPersonality();
+    });
+  }
+
+  void getPersonality() {
+    switch (personality) {
+      case 1:
+        ham_hunger_weight  = 1;
+        carrot_hunger_weight  = 2;
+        icecream_hunger_weight  = 1;
+        bread_hunger_weight  = 2;
+
+        ham_happiness_weight = 1;
+        carrot_happines_weight  = 2;
+        icecream_happiness_weight  = 1;
+        bread_happiness_weight  = 2;
+      
+        break;
+      case 2:
+        ham_hunger_weight  = 1;
+        carrot_hunger_weight  = 2;
+        icecream_hunger_weight  = 2;
+        bread_hunger_weight  = 1;
+
+        ham_happiness_weight = 1;
+        carrot_happines_weight  = 2;
+        icecream_happiness_weight  = 2;
+        bread_happiness_weight  = 1;
+        break;
+      case 3:
+        ham_hunger_weight  = 2;
+        carrot_hunger_weight  = 1;
+        icecream_hunger_weight  = 1;
+        bread_hunger_weight  = 2;
+
+        ham_happiness_weight = 2;
+        carrot_happines_weight  = 1;
+        icecream_happiness_weight  = 1;
+        bread_happiness_weight  = 2;
+        break;
+      default:
+        
+    }
+    log('Personality: $personality, Hunger Weights -> Ham: $ham_hunger_weight , Carrot: $carrot_hunger_weight , Ice Cream: $icecream_hunger_weight , Bread: $bread_hunger_weight ');
+    log('Personality: $personality, Happiness Weights -> Ham: $ham_happiness_weight , Carrot: $carrot_happines_weight , Ice Cream: $icecream_happiness_weight , Bread: $bread_happiness_weight ');
+  
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomAppBar(titleText: 'FOOD MENU', fontSize: 40, topPadding: 80),
+      appBar: CustomAppBar(titleText: 'FOOD MENU', fontSize: 40, topPadding: 80),
       extendBodyBehindAppBar: true,
       body: Container(
         width: double.infinity,
@@ -58,8 +121,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                   decoration: BoxDecoration(
                     color: const Color(0xFF9CAAFA),
                     borderRadius: BorderRadius.circular(10),
-                    border:
-                        Border.all(color: const Color(0xFF18235B), width: 4),
+                    border: Border.all(color: const Color(0xFF18235B), width: 4),
                   ),
                   child: GridView.count(
                     shrinkWrap: true,
@@ -75,19 +137,11 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 0;
                           });
-                          final currentHungerLevel = await dbRefHunger
-                              .once()
-                              .then((event) => event.snapshot.value as int?);
-                          //hunger
-                          if (currentHungerLevel != null) {
-                            if (currentHungerLevel == 10) {
-                              //prevents overflow
-                              await dbRefHunger.set(
-                                  currentHungerLevel); //updates hunger level when clicked once
-                            } else {
-                              await dbRefHunger.set(currentHungerLevel +
-                                  2); //updates hunger level when clicked once
-                            }
+                          try {
+                            await HungerLevelService.tryUpdateHungerLevel(ham_hunger_weight);
+                            await HappinessLevelService.tryUpdateHappinessLevel(ham_happiness_weight); // Assuming some happiness increment
+                          } catch (e) {
+                            print('Error updating levels: $e');
                           }
                         },
                       ),
@@ -98,20 +152,12 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 1;
                           });
-
-                          // Update hunger level
+                          // Update hunger and happiness level
                           try {
-                            await HungerLevelService.tryUpdateHungerLevel(1);
+                            await HungerLevelService.tryUpdateHungerLevel(carrot_hunger_weight );
+                            await HappinessLevelService.tryUpdateHappinessLevel(carrot_happines_weight);
                           } catch (e) {
-                            print('Error updating hunger level: $e');
-                          }
-
-                          // Update happiness level
-                          try {
-                            await HappinessLevelService.tryUpdateHappinessLevel(
-                                1);
-                          } catch (e) {
-                            print('Error updating happiness level: $e');
+                            print('Error updating levels: $e');
                           }
                         },
                       ),
@@ -122,10 +168,8 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 2;
                           });
-                          await HungerLevelService.tryUpdateHungerLevel(
-                              1); // Increase hunger level
-                          await HappinessLevelService.tryUpdateHappinessLevel(
-                              3); // Update happiness level
+                          await HungerLevelService.tryUpdateHungerLevel(icecream_hunger_weight ); // Increase hunger level
+                          await HappinessLevelService.tryUpdateHappinessLevel(icecream_happiness_weight); // Update happiness level
                         },
                       ),
                       CircularButton(
@@ -135,10 +179,8 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                           setState(() {
                             selectedButtonIndex = 3;
                           });
-                          await HungerLevelService.tryUpdateHungerLevel(
-                              2); // Increase hunger level
-                          await HappinessLevelService.tryUpdateHappinessLevel(
-                              1); // Update happiness level
+                          await HungerLevelService.tryUpdateHungerLevel(bread_hunger_weight ); // Increase hunger level
+                          await HappinessLevelService.tryUpdateHappinessLevel(bread_happiness_weight); // Update happiness level
                         },
                       ),
                     ],
