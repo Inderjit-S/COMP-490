@@ -1,11 +1,11 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:math';
-import 'dart:developer'; // Import for logging
+import 'dart:developer'; 
 
 class PersonalityService {
   static Future<int> getPersonality() async {
     final dbRefpers = FirebaseDatabase.instance.ref().child('personality');
-    final snapshot = await dbRefpers.get(); // Updated for newer Firebase API
+    final snapshot = await dbRefpers.get(); 
     final data = snapshot.value;
     if (data is int) {
       return data;
