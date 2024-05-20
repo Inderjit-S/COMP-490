@@ -7,6 +7,7 @@ import 'package:aerogotchi/screen/petviewscreen.dart';
 import 'package:aerogotchi/screen/playingmenuscreen.dart';
 import 'package:aerogotchi/screen/settingscreen.dart';
 import 'package:aerogotchi/screen/statusmenuscreen.dart';
+import 'package:aerogotchi/screen/aerofacesscreen.dart';
 import 'package:flutter/material.dart';
 
 void navigateToIdleScreen(BuildContext context)
@@ -55,6 +56,13 @@ void navigateToStatusMenuScreen(BuildContext context){
             MaterialPageRoute(
                 builder: (context) => StatusMenuScreen()),
           );
+}
+void navigateToAeroFacesScreen(BuildContext context){
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+        builder: (context) => AeroFacesScreen()),
+  );
 }
 void navigateToDroneControlScreen(BuildContext context,String petName){
   Navigator.push(

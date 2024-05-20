@@ -14,7 +14,7 @@ Container buildActionTopBox(
     ),
     padding: const EdgeInsets.symmetric(vertical: 0),
     // Adjust width to fit the content without overflowing
-    width: screenWidth, 
+    width: screenWidth,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       // Wrap children with Expanded to evenly distribute space
@@ -22,24 +22,32 @@ Container buildActionTopBox(
         Expanded(
           child: buildCircularButton(
             'assets/icons/droneIcon.png', const Color(0xFF929EC4), () {
-              navigateToDroneControlScreen(context, petName);
-            },
+            navigateToDroneControlScreen(context, petName);
+          },
             90,
           ),
         ),
         Expanded(
           child: buildCircularButton(
             'assets/icons/statusIcon.png', const Color(0xFF00FF0A), () {
-              navigateToStatusMenuScreen(context);
-            },
+            navigateToStatusMenuScreen(context);
+          },
             90,
           ),
         ),
         Expanded(
           child: buildCircularButton(
             'assets/icons/gearIcon.png', const Color(0xFF6354ED), () {
-              navigateToSettingScreen(context, petName);
-            },
+            navigateToSettingScreen(context, petName);
+          },
+            90,
+          ),
+        ),
+        Expanded(
+          child: buildCircularButton(
+            'assets/icons/exclaimicon.png', const Color(0xFFFFA500), () {
+            navigateToAeroFacesScreen(context);
+          },
             90,
           ),
         ),
@@ -47,7 +55,6 @@ Container buildActionTopBox(
     ),
   );
 }
-
 
 Widget buildCircularButton(
     String assetPath, Color color, VoidCallback onPressed, double iconSize) {
