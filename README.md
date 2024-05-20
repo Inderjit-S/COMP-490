@@ -110,5 +110,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 If you have any questions or suggestions, feel free to reach out:
 
-- GitHub: [[https://github.com/yourusername](https://github.com/Inderjit-S/COMP-490)](https://github.com/Inderjit-S/COMP-490)
+- GitHub: [(https://github.com/Inderjit-S/COMP-490)](https://github.com/Inderjit-S/COMP-490)
 
