@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 class StatusMenuScreen extends StatefulWidget {
   const StatusMenuScreen({Key? key});
-
   @override
   _StatusMenuScreenState createState() => _StatusMenuScreenState();
 }
@@ -15,7 +14,6 @@ class _StatusMenuScreenState extends State<StatusMenuScreen> {
   int energyLevel = 0;
   int hungerLevel = 0;
   int happinessLevel = 0;
-
   @override
   void initState() {
     super.initState();
@@ -39,7 +37,6 @@ class _StatusMenuScreenState extends State<StatusMenuScreen> {
       });
     });
   }
-
   // Functions to retrieve the Energy, Happiness, Hunger name from the database
   // *************************************
 

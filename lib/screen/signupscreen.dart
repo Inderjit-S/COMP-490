@@ -2,25 +2,22 @@ import 'package:aerogotchi/reusable_widget/reusable_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'loginscreen.dart';
-import 'logoutscreen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
-
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-   TextEditingController _passwordTextController = TextEditingController();
-   TextEditingController _emailTextController = TextEditingController();
+  TextEditingController _passwordTextController = TextEditingController();
+  TextEditingController _emailTextController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: AppBar( //Creates the app bar with text Sign Up
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           title: Text(
@@ -46,17 +43,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    reusableTextField("Enter Email", Icons.person_outline, //Text field to enter email
-                        false, _emailTextController),
+                    reusableTextField(
+                        "Enter Email",
+                        Icons.person_outline, //Text field to enter email
+                        false,
+                        _emailTextController),
                     const SizedBox(
                       height: 20,
                     ),
-                    reusableTextField("Enter Password", Icons.lock_outline, //Text field to enter password
-                        true, _passwordTextController),
+                    reusableTextField(
+                        "Enter Password",
+                        Icons.lock_outline, //Text field to enter password
+                        true,
+                        _passwordTextController),
                     const SizedBox(
                       height: 20,
                     ),
-                    signInButton((context), false, () { //sends data to database for username and password
+                    signInButton((context), false, () {
+                      //sends data to database for username and password
                       FirebaseAuth.instance
                           .createUserWithEmailAndPassword(
                         email: _emailTextController.text,

@@ -1,4 +1,4 @@
-import 'package:aerogotchi/components/levels/event_service.dart';
+import 'package:aerogotchi/components/events/event_service.dart';
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/playingmenu/my_list_file.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
@@ -15,45 +15,44 @@ class PlayingMenuScreen extends StatefulWidget {
 
 class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
   int selectedOptionIndex = -1;
-  
- void navigateToTempScreenAndUpdateHappiness(int index) async {
-  // Get the name of the selected game
-  String selectedGame = getTitle(index);
 
-  // Update the event in the database to the selected game
-  try {
-    await EventService.updateEvent(selectedGame);
-  } catch (error) {
-    print('Error updating event: $error');
-  }
+  void navigateToTempScreenAndUpdateHappiness(int index) async {
+    // Get the name of the selected game
+    String selectedGame = getTitle(index);
 
-  // If the selected game is "Photo Pilot", update the take_photo boolean to true
-  if (selectedGame == "Photo Pilot") {
+    // Update the event in the database to the selected game
     try {
-      await EventService.updateTakePhoto(true);
+      await EventService.updateEvent(selectedGame);
     } catch (error) {
-      print('Error updating take photo: $error');
+      print('Error updating event: $error');
     }
-  }else{
-    try {
-      await EventService.updateTakePhoto(false);
-    } catch (error) {
-      print('Error updating take photo: $error');
+
+    // If the selected game is "Photo Pilot", update the take_photo boolean to true
+    if (selectedGame == "Photo Pilot") {
+      try {
+        await EventService.updateTakePhoto(true);
+      } catch (error) {
+        print('Error updating take photo: $error');
+      }
+    } else {
+      try {
+        await EventService.updateTakePhoto(false);
+      } catch (error) {
+        print('Error updating take photo: $error');
+      }
     }
+
+    // Update happiness level
+    await HappinessLevelService.tryUpdateHappinessLevel(2);
+
+    // Navigate to the temporary screen for the selected option
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => TempScreen(optionName: getTitle(index)),
+      ),
+    );
   }
-
-  // Update happiness level
-  await HappinessLevelService.tryUpdateHappinessLevel(2);
-
-  // Navigate to the temporary screen for the selected option
-  Navigator.push(
-    context,
-    MaterialPageRoute(
-      builder: (context) => TempScreen(optionName: getTitle(index)),
-    ),
-  );
-}
-
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +71,12 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
               child: ListView(
                 itemExtent: 95.0,
                 children: <Widget>[
-                  myListTile(0, 'Sky-Shuffle', 'Dance', selectedOptionIndex, handleTileTap),
-                  myListTile(1, 'Follow the Leader', 'Following Game', selectedOptionIndex, handleTileTap),
-                  myListTile(2, 'Photo Pilot', 'Photoshoot', selectedOptionIndex, handleTileTap),
+                  myListTile(0, 'Sky-Shuffle', 'Dance', selectedOptionIndex,
+                      handleTileTap),
+                  myListTile(1, 'Follow the Leader', 'Following Game',
+                      selectedOptionIndex, handleTileTap),
+                  myListTile(2, 'Photo Pilot', 'Photoshoot',
+                      selectedOptionIndex, handleTileTap),
                 ],
               ),
             ),
@@ -98,19 +100,20 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
                 child: SizedBox(
                   width: double.infinity,
                   child: TextButton(
-                    onPressed: () =>
-                        navigateToTempScreenAndUpdateHappiness(selectedOptionIndex),
+                    onPressed: () => navigateToTempScreenAndUpdateHappiness(
+                        selectedOptionIndex),
                     style: ButtonStyle(
                       padding: MaterialStateProperty.all<EdgeInsets>(
-                        const EdgeInsets.symmetric(vertical: 40, horizontal: 40),
+                        const EdgeInsets.symmetric(
+                            vertical: 40, horizontal: 40),
                       ),
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.transparent),
-                      foregroundColor:
-                          MaterialStateProperty.resolveWith<Color>(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.transparent),
+                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.pressed)) {
-                            return Colors.white; // Change color to white when hovered
+                            return Colors
+                                .white; // Change color to white when hovered
                           }
                           return Colors.white.withOpacity(0.2); // Default color
                         },
@@ -184,6 +187,7 @@ class _PlayingMenuScreenState extends State<PlayingMenuScreen> {
     }
   }
 }
+
 class TempScreen extends StatelessWidget {
   final String optionName;
 
@@ -204,16 +208,18 @@ class TempScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: CustomAppBar(titleText: optionName),
-      extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: true,
         body: Center(
           child: Container(
             width: double.infinity,
             height: double.infinity,
-            decoration: BackgroundGradient.blueGradient, // Apply the specified decoration here
+            decoration: BackgroundGradient
+                .blueGradient, // Apply the specified decoration here
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SmallerlogoWidget("background_image/aerogotchi.png"), // SmallerlogoWidget
+                SmallerlogoWidget(
+                    "background_image/aerogotchi.png"), // SmallerlogoWidget
                 SizedBox(height: 20), // Spacer
                 ElevatedButton(
                   onPressed: () async {
@@ -224,10 +230,10 @@ class TempScreen extends StatelessWidget {
                       print('Error updating event: $error');
                     }
                     try {
-      await EventService.updateTakePhoto(false);
-    } catch (error) {
-      print('Error updating take photo: $error');
-    }
+                      await EventService.updateTakePhoto(false);
+                    } catch (error) {
+                      print('Error updating take photo: $error');
+                    }
                     // Navigate back
                     Navigator.pop(context);
                   },

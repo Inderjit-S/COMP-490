@@ -1,4 +1,4 @@
-import 'package:aerogotchi/components/levels/event_service.dart';
+import 'package:aerogotchi/components/events/event_service.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -51,10 +51,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             print('Error updating event: $error');
           }
           try {
-      await EventService.updateTakePhoto(false);
-    } catch (error) {
-      print('Error updating take photo: $error');
-    }
+            await EventService.updateTakePhoto(false);
+          } catch (error) {
+            print('Error updating take photo: $error');
+          }
           Navigator.pop(context);
         },
         color: const Color.fromARGB(68, 0, 0, 0).withOpacity(0.3),

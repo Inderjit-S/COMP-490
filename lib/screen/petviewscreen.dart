@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:aerogotchi/components/levels/event_service.dart';
+import 'package:aerogotchi/components/events/event_service.dart';
 import 'package:aerogotchi/components/navigation_helper.dart';
 import 'package:aerogotchi/components/petview/buildBottomActionBox.dart';
 import 'package:aerogotchi/components/petview/buildPetImageBox.dart';
@@ -12,7 +12,6 @@ import 'package:aerogotchi/components/levels/hunger_level_service.dart';
 import 'package:aerogotchi/components/timers/hunger_level_timer.dart';
 import 'package:aerogotchi/components/timers/happiness_level_timer.dart';
 import 'package:aerogotchi/components/timers/neglect_service_timer.dart';
-
 
 class PetViewScreen extends StatefulWidget {
   final String petName;
@@ -142,10 +141,10 @@ class _PetViewScreenState extends State<PetViewScreen> {
                         BottomActionBox(
                           width: screenWidth * 0.7,
                           onFoodMenuPressed: () {
-                          navigateToFoodMenuScreen(context);
+                            navigateToFoodMenuScreen(context);
                           },
                           onPlayingMenuPressed: () {
-                           navigateToPlayingMenuScreen(context);
+                            navigateToPlayingMenuScreen(context);
                           },
                         ),
                         const SizedBox(height: 20),
@@ -156,7 +155,6 @@ class _PetViewScreenState extends State<PetViewScreen> {
 //     fontSize: 20,
 //   ),
 // ),
-
                       ],
                     ),
                   ),

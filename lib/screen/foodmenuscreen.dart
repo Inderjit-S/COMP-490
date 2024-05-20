@@ -1,44 +1,30 @@
 import 'package:aerogotchi/components/levels/happiness_level_service.dart';
 import 'package:aerogotchi/components/levels/hunger_level_service.dart';
-import 'package:aerogotchi/components/levels/level_service.dart';
 import 'package:aerogotchi/reusable_widget/background_gradient.dart';
 import 'package:aerogotchi/reusable_widget/custom_foodmenu_circular_button.dart';
 import 'package:aerogotchi/reusable_widget/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart'; 
+import 'package:firebase_database/firebase_database.dart';
 
 class FoodMenuScreen extends StatefulWidget {
   const FoodMenuScreen({super.key});
-
   @override
   _FoodMenuScreenState createState() => _FoodMenuScreenState();
 }
 
 class _FoodMenuScreenState extends State<FoodMenuScreen> {
   int? selectedButtonIndex;
-
   // Retrieve the Energy,Happiness,Hunger name from the database
+  final dbRefper = FirebaseDatabase.instance.reference().child('personality');
   final dbRefEnergy =
       FirebaseDatabase.instance.reference().child('energy_level');
   final dbRefHappiness =
       FirebaseDatabase.instance.reference().child('happiness_level');
   final dbRefHunger =
       FirebaseDatabase.instance.reference().child('hunger_level');
-
   @override
   void initState() {
     super.initState();
-    // Fetch initial levels
-    LevelFetchService.fetchHungerLevel((value) {
-      setState(() {
-        
-      });
-    });
-    LevelFetchService.fetchHappinessLevel((value) {
-      setState(() {
-        
-      });
-    });
   }
 
   @override
@@ -53,8 +39,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
         decoration: BackgroundGradient.blueGradient,
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(
-                20.0, 0, 20.0, 20.0), 
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 20.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -123,7 +108,8 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
 
                           // Update happiness level
                           try {
-                            await HappinessLevelService.tryUpdateHappinessLevel(1);
+                            await HappinessLevelService.tryUpdateHappinessLevel(
+                                1);
                           } catch (e) {
                             print('Error updating happiness level: $e');
                           }
@@ -137,7 +123,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                             selectedButtonIndex = 2;
                           });
                           await HungerLevelService.tryUpdateHungerLevel(
-                              1); // Increase hunger level 
+                              1); // Increase hunger level
                           await HappinessLevelService.tryUpdateHappinessLevel(
                               3); // Update happiness level
                         },
@@ -150,7 +136,7 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
                             selectedButtonIndex = 3;
                           });
                           await HungerLevelService.tryUpdateHungerLevel(
-                              2); // Increase hunger level 
+                              2); // Increase hunger level
                           await HappinessLevelService.tryUpdateHappinessLevel(
                               1); // Update happiness level
                         },
@@ -166,5 +152,3 @@ class _FoodMenuScreenState extends State<FoodMenuScreen> {
     );
   }
 }
-
-
