@@ -42,12 +42,12 @@ class _buildPetImageBoxState extends State<buildPetImageBox> {
   @override
   Widget build(BuildContext context) {
     String image;
-    if (widget.hungerLevel < 7) {
+    if (widget.hungerLevel <= 3) {
       image = "background_image/aerounhappy.png";
-    } else if (widget.hungerLevel < 5) {
-      image = "background_image/aeroindifferent.png";
+    } else if (widget.hungerLevel <= 7) {
+      image = "background_image/aerooriginal.png";
     } else {
-      image = "background_image/aerosleepy.png";
+      image = "background_image/aeroexcited.png";
     }
 
     return Container(
