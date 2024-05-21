@@ -74,6 +74,11 @@ flutter:
       - background_image/aeroindifferent.png
       - background_image/aerosleepy.png
       - background_image/aerounhappy.png
+      - background_image/aerooriginal.png
+      - background_image/aerooriginalsmall.png
+      - background_image/aerounhappysmall.png
+      - background_image/aerosleepysmall.png
+      - background_image/aeroexcitedsmall.png
       - assets/icons/
       - assets/icons/exclaimicon.png
 

@@ -47,7 +47,7 @@ class _buildPetImageBoxState extends State<buildPetImageBox> {
     } else if (widget.hungerLevel < 5) {
       image = "background_image/aeroindifferent.png";
     } else {
-      image = "background_image/aeroexcited.png";
+      image = "background_image/aerosleepy.png";
     }
 
     return Container(
